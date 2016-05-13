@@ -5,6 +5,11 @@
 ### Use Compose to build the image
 ```
  $ docker-compose build
- $ docker-compose up
- 
 ```
+This instructs Compose to build webapp. 
+
+```
+ $ docker-compose up
+```
+
+This runs the app.

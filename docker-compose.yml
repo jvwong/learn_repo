@@ -1,29 +1,16 @@
-#learn:
-#  build: .
-#  ports:
-#    - "41960:8000"
-#  environment:
-#    ENV: DEV
-#  volumes:
-#    - ./learn:/learn
-#   links:
-#     - db
-#
-# db:
-#   image: postgres
+learn:
+  build: .
+  ports:
+    - "41960:8000"
+  environment:
+    ENV: DEV
+  volumes:
+    - ./learn:/learn
+    - /learn/static
+    - /learn/media
+    - /learn/templates
+  links:
+    - db
 
-version: '2'
-services:
-  db:
-    image: postgres
-  webapp:
-    environment:
-      ENV: DEV
-    build: .
-#    command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - ./learn:/learn
-    ports:
-      - "41960:8000"
-    depends_on:
-      - db
+db:
+  image: postgres
