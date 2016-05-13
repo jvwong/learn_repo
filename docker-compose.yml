@@ -1,13 +1,29 @@
-learn:
-  build: .
-  ports:
-    - "41960:8000"
-  environment:
-    ENV: DEV
-  volumes:
-    - ./learn:/learn
-  # links:
-    # - redis
+#learn:
+#  build: .
+#  ports:
+#    - "41960:8000"
+#  environment:
+#    ENV: DEV
+#  volumes:
+#    - ./learn:/learn
+#   links:
+#     - db
+#
+# db:
+#   image: postgres
 
-# redis:
-  # image: redis:3.0
+version: '2'
+services:
+  db:
+    image: postgres
+  webapp:
+    environment:
+      ENV: DEV
+    build: .
+#    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./learn:/learn
+    ports:
+      - "41960:8000"
+    depends_on:
+      - db

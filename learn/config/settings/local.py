@@ -6,17 +6,15 @@ DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1']
 
 DATABASE = ".".join([PROJECT_NAME, "db"])
-# DATABASE_NAME = os.path.abspath(os.path.join(REPO_DIR, "database", DATABASE))
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2'
-#         'NAME': DATABASE_NAME,
-#         # The following settings are not used with sqlite3:
-#         'USER': '',
-#         'PASSWORD': '',
-#         'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-#         'PORT': '',                      # Set to empty string for default.
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': DATABASE,
+        'USER': 'postgres',
+        'PASSWORD': '',
+        'HOST': 'db',
+        'PORT': '5432'
+    }
+}
 
 INSTALLED_APPS += []
