@@ -1,0 +1,4 @@
+Django==1.9.5
+gunicorn==19.4
+Markdown==2.6.6
+

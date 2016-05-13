@@ -1,0 +1,13 @@
+light_django:
+  build: .
+  ports:
+    - "41960:8000"
+  environment:
+    ENV: DEV
+  volumes:
+    - ./lightweight:/lightweight
+  # links:
+    # - redis
+
+# redis:
+  # image: redis:3.0
