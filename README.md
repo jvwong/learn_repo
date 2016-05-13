@@ -15,28 +15,22 @@ This instructs Compose to build webapp.
 This runs the app.
 
 ## Create the database 
-With the container ('learnrepo_db_1') running, get a terminal connected to it:
+With the container ('learnrepo_db_1') running, create the database:
 ``` 
- $ docker exec -it learnrepo_db_1 /bin/bash    
-```
-
-Now create the database:
-```
- root@:/# createdb -Upostgres learn.db
- root@:/# exit       
+ $ docker exec learnrepo_db_1 createdb -Upostgres learn.db        
 ```
 
 ## Create Super User
-With the container ('learnrepo_learn_1') running, get a terminal connected to it: 
+With the container ('learnrepo_learn_1') running, make the initial migrations: 
 
 ```
- $ docker exec -it learnrepo_learn_1 /bin/bash    
+ $ docker exec learnrepo_learn_1 python manage.py makemigrations
+ $ docker exec learnrepo_learn_1 python manage.py migrate 
 ```
 
 Now create a super user:
 ```
- root@:/learn# python manage.py makemigrations 
- root@:/learn# python manage.py migrate
+ $ docker exec -it learnrepo_learn_1 /bin/bash    
  root@:/learn# python manage.py createsuperuser
  ...
  root@:/learn# exit

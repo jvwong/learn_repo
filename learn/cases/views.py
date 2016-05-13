@@ -6,7 +6,7 @@ def index(request):
         """<!DOCTYPE html>
             <html>
                 <body>
-                    <h1>My First Heading</h1>
+                    <h1>This is a heading</h1>
                     <p>My first paragraph.</p>
                 </body>
             </html>

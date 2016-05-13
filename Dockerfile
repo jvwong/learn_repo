@@ -17,5 +17,5 @@ EXPOSE 8000
 COPY cmd.sh /
 CMD ["/cmd.sh"]
 
+# docker rm $(docker ps -aq)
 # docker rmi $(docker images -f "dangling=true" -q)
-
