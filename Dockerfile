@@ -10,7 +10,6 @@ WORKDIR /learn
 COPY learn /learn
 
 # Apply database migrations
-RUN python manage.py makemigrations --noinput
 RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
@@ -19,3 +18,4 @@ COPY cmd.sh /
 CMD ["/cmd.sh"]
 
 # docker rmi $(docker images -f "dangling=true" -q)
+
