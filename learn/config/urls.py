@@ -5,5 +5,5 @@ The `urlpatterns` list routes URLs to views. For more information please see:
 from django.conf.urls import url, include
 
 urlpatterns = [
-    url(r'^learn/', include('web.urls')),
+    url(r'^cases/', include('cases.urls')),
 ]

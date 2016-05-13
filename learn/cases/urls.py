@@ -7,5 +7,5 @@ from django.conf.urls import url
 from .views import index
 
 urlpatterns = [
-    url(r'^$', index, name='web_index'),
+    url(r'^$', index, name='webapp_index'),
 ]

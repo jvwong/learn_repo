@@ -1,11 +1,11 @@
-light_django:
+learn:
   build: .
   ports:
     - "41960:8000"
   environment:
     ENV: DEV
   volumes:
-    - ./lightweight:/lightweight
+    - ./learn:/learn
   # links:
     # - redis
 
