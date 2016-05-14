@@ -1,15 +1,18 @@
-learn:
-  build: .
-  ports:
-    - "41960:8000"
-  environment:
-    ENV: DEV
-  volumes:
-    - ./learn:/learn
-    - /learn/static
-    - /learn/media
-  links:
-    - db
-
-db:
-  image: postgres
+version: '2'
+services:
+  db:
+    env_file:
+      - ./web.env
+    image: postgres
+  web:
+    build: .
+    ports:
+      - "41960:8000"
+    environment:
+      ENV: DEV
+    volumes:
+      - ./learn:/learn
+      - /learn/static
+      - /learn/media
+    depends_on:
+      - db
