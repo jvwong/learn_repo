@@ -1,13 +1,7 @@
-from django.conf.urls import url
-from django.http import HttpResponse
+from django.views.generic import ListView
+from .models import Article
 
-def index(request):
-    return HttpResponse(
-        """<!DOCTYPE html>
-            <html>
-                <body>
-                    <h1>This is a heading</h1>
-                    <p>My first paragraph.</p>
-                </body>
-            </html>
-        """)
+
+class CaseList(ListView):
+    template_name = "cases/case_list.html"
+    model = Article
