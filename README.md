@@ -12,18 +12,24 @@ Once the web service image is built, Compose runs it and executes the ```python 
 
 
 ```
- $ docker-compose up
+ $ docker-compose up -d
 ```
 
-This runs the app.
+This runs the app (background).
 
 
 ## Create Super User
-Now create a super user:
+Now create a super user inside the running container:
 ```
- $ docker exec -it learnrepo_learn_1 /bin/bash    
+ $ docker exec -it learnrepo_web_1 /bin/bash    
  root@:/learn# python manage.py createsuperuser
  ...
  root@:/learn# exit
 ```
 
+## Database migrations
+When the model is changed, this must be versioned and commited. Within a running container:
+```
+ $ docker exec learnrepo_web_1 python manage.py makemigrations
+ $ docker exec learnrepo_web_1 python manage.py migrate 
+```

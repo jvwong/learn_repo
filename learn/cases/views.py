@@ -1,7 +1,12 @@
-from django.views.generic import ListView
-from .models import Article
+from django.views.generic import ListView, DetailView
+from .models import Case
 
 
 class CaseList(ListView):
     template_name = "cases/case_list.html"
-    model = Article
+    model = Case
+
+
+class CaseDetail(DetailView):
+    template_name = "cases/case_detail.html"
+    model = Case
