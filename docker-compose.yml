@@ -8,7 +8,6 @@ learn:
     - ./learn:/learn
     - /learn/static
     - /learn/media
-    - /learn/templates
   links:
     - db
 

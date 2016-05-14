@@ -6,6 +6,7 @@ import os
 PROJECT_NAME = "learn"
 
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+DEBUG = True
 
 #Pre-configured paths
 SETTINGS_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -65,15 +66,28 @@ ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
+        # See: https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-TEMPLATES-BACKEND
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
+        'DIRS': [
+            TEMPLATE_PATH
+        ],
+        'APP_DIRS': False,
         'OPTIONS': {
+            'loaders': [
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+            ],
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
+                # Your stuff: custom template context processors go here
             ],
         },
     },
@@ -90,7 +104,6 @@ STATICFILES_DIRS = [
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    # STATIC_PATH,
 ]
 
 # Application definition
