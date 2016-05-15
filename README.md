@@ -37,11 +37,19 @@ When the model is changed, this must be versioned and commited. Within a running
 ## Backup the postgresql data volume 
 See the official Docker [docs](https://docs.docker.com/engine/userguide/containers/dockervolumes/)
 ```
- $ docker run --rm --volumes-from <dbdata container name> -v $(pwd):/backup debian tar cvf /backup/backup.tar /var/lib/postgresql/data
+ $ docker run --rm --volumes-from <data volume container name> -v /Users/jeffreywong/backups:/backup debian tar cvf /backup/backup.tar /var/lib/postgresql/data
 ```
-Here you’ve launched a new container and mounted the volume from the dbstore container. You’ve then mounted a local host directory as /backup. Finally, you’ve passed a command that uses tar to backup the contents of the dbdata volume to a backup.tar file inside our /backup directory. When the command completes and the container stops we’ll be left with a backup of our dbdata volume.
+Note: the official postgres Dockerfile defines a volume at /var/lib/postgresql/data.
 
-Then un-tar the backup file in a container`s data volume.
+* Here you’ve launched a new container and mounted the volume from the 'data volume container name'.
+* You’ve then mounted a local host directory ($pwd) as /backup inside the new (anonymous) container. 
+* Finally, you’ve passed a command that uses tar to backup the contents of the ```/var/lib/postgresql/data``` (source) volume to a backup.tar file inside our /backup (target) directory. When the command completes and the container stops we’ll be left with a backup of our ```/var/lib/postgresql/data``` volume. 
+
+Let's say that you wish to restore to the learn_data container 
+Un-tar the backup file in that container's data volume.
 ```
- $ docker run --rm --volumes-from <dbdata container name> -v $(pwd):/backup ubuntu bash -c "cd /dbdata && tar xvf /backup/backup.tar --strip 1"
+    docker cp [OPTIONS] SRC_PATH | - CONTAINER:DEST_PATH
+```
+```
+ $  docker run --rm --volumes-from learn_data -v ~/backups/:/backup debian tar xvf /backup/backup.tar 
 ```

@@ -1,11 +1,13 @@
 version: '2'
 services:
   dbdata:
+    container_name: learn_data
     image: postgres:9.5.2
     volumes:
       - /var/lib/postgresql/data
-    command: "Data-only container for postgres"
+    command: echo "Data-only container for postgres"
   db:
+    container_name: learn_db
     env_file:
       - ./web.env
     image: postgres:9.5.2
@@ -14,6 +16,7 @@ services:
     ports:
       - "5432:5432"
   web:
+    container_name: learn_web
     build: .
     ports:
       - "41960:8000"
