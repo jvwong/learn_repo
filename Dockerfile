@@ -18,4 +18,11 @@ COPY cmd.sh /
 CMD ["/cmd.sh"]
 
 # docker rm $(docker ps -aq)
+
+# Get rid of dangling images.
 # docker rmi $(docker images -f "dangling=true" -q)
+
+# Get rid of dangling volumes
+# use docker 'rm -v' when deleting containers OR
+# add the --rm flag with 'docker run'
+# docker volume rm $(docker volume ls -fq dangling=true)
