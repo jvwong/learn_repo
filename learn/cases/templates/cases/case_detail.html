@@ -2,8 +2,19 @@
 {% load staticfiles %}
 
 {% block content %}
-    <h1>One Case</h1>
-    <div>
-        {{ case.title }}
-    </div>
+    <h1>{{ case.title }}</h1>
+    <div>{{ case.title }}</div>
+    <div>{{ case.subtitle }}</div>
+    <div>{{ case.summary }}</div>
+    <div>{{ case.author_profile }}</div>
+    <div>{{ case.context }}</div>
+    <div>{{ case.question }}</div>
+    <div>{{ case.researcher_goals }}</div>
+    <div>{{ case.approach }}</div>
+    <div>{{ case.reference }}</div>
+    <div>{{ case.quote }}</div>
+
+    <div><img src="{{MEDIA_URL}}{{ case.figure }}" /></div>
+    <div>{{ case.figure_legend }}</div>
+
 {% endblock %}
