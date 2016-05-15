@@ -115,8 +115,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.sessions',
-
-    ## Third-party
+    'cases',
+    'core'
 ]
 
 MIDDLEWARE_CLASSES = [

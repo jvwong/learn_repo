@@ -18,6 +18,5 @@ DATABASES = {
 }
 
 INSTALLED_APPS += [
-    'cases',
-    'core'
+
 ]
