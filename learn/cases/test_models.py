@@ -1,6 +1,5 @@
 from django.test import TestCase
 from datetime import date
-from unittest.mock import patch, MagicMock
 
 from cases.models import Article, Case
 

@@ -1,18 +1,34 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+{% load learn_tags %}
 
 {% block content %}
     <h1>{{ case.title }}</h1>
-    <div>{{ case.title }}</div>
-    <div>{{ case.subtitle }}</div>
-    <div>{{ case.summary }}</div>
-    <div>{{ case.author_profile }}</div>
-    <div>{{ case.context }}</div>
-    <div>{{ case.question }}</div>
-    <div>{{ case.researcher_goals }}</div>
-    <div>{{ case.approach }}</div>
-    <div>{{ case.reference }}</div>
-    <div>{{ case.quote }}</div>
+    <ul>
+        {% for key, value in case.quick_summary.items|sort %}
+        <li>
+            {{ key }}: {{ value }}
+        </li>
+        {% endfor %}
+    </ul>
+
+    <div>{{ case.subtitle }}</div><hr/>
+    <div>{{ case.summary }}</div><hr/>
+    <div>{{ case.author_profile }}</div><hr/>
+    <div>{{ case.context }}</div><hr/>
+    <div>{{ case.question }}</div><hr/>
+    <div>{{ case.researcher_goals }}</div><hr/>
+    <div>{{ case.approach }}</div><hr/>
+
+     <ul>
+        {% for key, value in case.references.items|sort %}
+        <li>
+            {{ key }}: {{ value }}
+        </li>
+        {% endfor %}
+    </ul><hr/>
+
+    <div>{{ case.quote }}</div><hr/>
 
     <div><img src="{{MEDIA_URL}}{{ case.figure }}" /></div>
     <div>{{ case.figure_legend }}</div>
