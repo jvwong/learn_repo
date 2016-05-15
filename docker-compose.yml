@@ -1,9 +1,18 @@
 version: '2'
 services:
+  dbdata:
+    image: postgres:9.5.2
+    volumes:
+      - /var/lib/postgresql/data
+    command: "Data-only container for postgres"
   db:
     env_file:
       - ./web.env
-    image: postgres
+    image: postgres:9.5.2
+    volumes_from:
+      - dbdata
+    ports:
+      - "5432:5432"
   web:
     build: .
     ports:

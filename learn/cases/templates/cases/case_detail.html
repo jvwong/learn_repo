@@ -7,8 +7,9 @@
     <ul>
         {% for key, value in case.quick_summary.items|sort %}
         <li>
-            {{ key }}: {{ value }}
+            {{ value }}
         </li>
+        {% empty %}
         {% endfor %}
     </ul>
 
@@ -30,7 +31,7 @@
 
     <div>{{ case.quote }}</div><hr/>
 
-    <div><img src="{{MEDIA_URL}}{{ case.figure }}" /></div>
+    <div><img width="500" src="{{MEDIA_URL}}{{ case.figure }}" /></div>
     <div>{{ case.figure_legend }}</div>
 
 {% endblock %}
