@@ -70,13 +70,14 @@ Stop and remove the data (learn_data) and postgres (learn_db) containers:
 ```
  $ docker-compose down  
 ```
-Now rebuild the services as above (Starting from Scratch).
+Now rebuild the services as above.
 ```
  $ docker-compose run web python manage.py makemigrations cases
  $ docker-compose run web python manage.py migrate
+ $ docker-compose kill
 ```
 
-Dump the data into the database container (learn_db) from a new dummy container:
+Dump the data into the database and data containers (learn_data/db) from new dummy containers:
 ```
  $ docker run --volumes-from learn_db -v /Users/jeffreywong/backups/2016/05/16:/backup busybox tar xvfz /backup/postgres-2016-05-16-0935.tar.gz
  $ docker run --volumes-from learn_data -v /Users/jeffreywong/backups/2016/05/16:/backup busybox tar xvfz /backup/postgres-2016-05-16-0935.tar.gz
