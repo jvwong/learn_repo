@@ -24,7 +24,7 @@ services:
       ENV: DEV
     volumes:
       - ./learn:/learn
-      - /learn/static
-      - /learn/media
+      - ./learn/static:/learn/static
+      - ./learn/media:/learn/media
     depends_on:
       - db

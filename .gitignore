@@ -1,4 +1,4 @@
 .idea/
 *.pyc
 migrations/
-backup.tar
+learn/static/admin
