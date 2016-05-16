@@ -35,8 +35,8 @@ When the model is changed, this must be versioned and commited. Within a running
 ```
 
 
-## Performing Backups
-### Backup the postgresql data volume
+## Data Backup & Restoration
+### Backup 
 The bash script `backup.sh` in the backups directory will dump the entire data volume into a tar file on the local machine. 
 *Note: the official postgres Dockerfile defines a volume at /var/lib/postgresql/data.*
 ```
@@ -65,24 +65,25 @@ The bash script `backup.sh` in the backups directory will dump the entire data v
 * Mount a user-defined host directory `BACKUP_PATH` as /backup inside the new container 
 * Finally, tar the contents of `/var/lib/postgresql/data` in `DATA_CONTAINER_NAME` 
 
-### Dump the postgresql database
-## Into host directory 
+### Restore
+Stop and remove the data (learn_data) and postgres (learn_db) containers:
 ```
- $ docker run --interactive \
- 
+ $ docker-compose down  
 ```
- 
-
-## Starting from a previous backup of postgresql
-Inside the copy the tarball to the learn_db container and unpack into `/var/lib/postgresql/data`: 
+Now rebuild the services as above (Starting from Scratch).
 ```
- $ docker cp ~/backups/backup.tar learn_db:/tmp
- $ docker exec -it learn_db tar xvf /tmp/backup.tar --strip=4 --directory /var/lib/postgresql/data 
-```
-Restart the containers.
-```
- $ docker-compose restart
- 
+ $ docker-compose run web python manage.py makemigrations cases
+ $ docker-compose run web python manage.py migrate
 ```
 
-## Saving the learn_web local media files etc...?
+Dump the data into the database container (learn_db) from a new dummy container:
+```
+ $ docker run --volumes-from learn_db -v /Users/jeffreywong/backups/2016/05/16:/backup busybox tar xvfz /backup/postgres-2016-05-16-0935.tar.gz
+ $ docker run --volumes-from learn_data -v /Users/jeffreywong/backups/2016/05/16:/backup busybox tar xvfz /backup/postgres-2016-05-16-0935.tar.gz
+```
+*If you dump into just one of the two above, it creates a discord between database IDs*
+ 
+Run the web service
+```
+ $ docker-compose up
+```

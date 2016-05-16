@@ -2,7 +2,7 @@ version: '2'
 services:
   dbdata:
     container_name: learn_data
-    image: postgres:9.5.2
+    image: busybox
     volumes:
       - /var/lib/postgresql/data
     command: echo "Data-only container for postgres"
