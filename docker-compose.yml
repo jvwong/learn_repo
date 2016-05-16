@@ -1,18 +1,12 @@
 version: '2'
 services:
-  dbdata:
-    container_name: learn_data
-    image: busybox
-    volumes:
-      - /var/lib/postgresql/data
-    command: echo "Data-only container for postgres"
   db:
     container_name: learn_db
     env_file:
       - ./web.env
     image: postgres:9.5.2
-    volumes_from:
-      - dbdata
+    volumes:
+      - dbdata:/var/lib/postgresql/data
     ports:
       - "5432:5432"
   web:
@@ -28,3 +22,7 @@ services:
       - ./learn/media:/learn/media
     depends_on:
       - db
+
+volumes:
+  dbdata:
+    driver: local
