@@ -116,7 +116,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.sessions',
     'cases',
-    'core'
+    'core',
+    'markupfield',
+    'tagging'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -127,6 +129,14 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware'
 ]
+
+## Third-party apps
+# django-markupfield 1.4.0
+import markdown
+MARKUP_FIELD_TYPES = (
+    ('markdown', markdown.markdown),
+)
+
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

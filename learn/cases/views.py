@@ -9,4 +9,4 @@ class CaseList(ListView):
 
 class CaseDetail(DetailView):
     template_name = "cases/case_detail.html"
-    model = Case
+    queryset = Case.objects.select_related('article')

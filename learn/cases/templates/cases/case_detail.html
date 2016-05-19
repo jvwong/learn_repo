@@ -1,17 +1,18 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% load learn_tags %}
+{% load tagging_tags %}
 
 {% block content %}
     <h1>{{ case.title }}</h1>
-    <ul>
-        {% for key, value in case.quick_summary.items|sort %}
-        <li>
-            {{ value }}
-        </li>
-        {% empty %}
-        {% endfor %}
-    </ul>
+    <div>{{ case.test }}</div>
+    <div>
+        <h3>{{ case.article.title }}</h3>
+        <span>{{ case.article.authors.0 }}</span>
+    </div>
+    <hr/>
+
+    <div>{{ case.quick_summary }}</div>
 
     <div>{{ case.subtitle }}</div><hr/>
     <div>{{ case.summary }}</div><hr/>
@@ -21,17 +22,22 @@
     <div>{{ case.researcher_goals }}</div><hr/>
     <div>{{ case.approach }}</div><hr/>
 
-     <ul>
-        {% for key, value in case.references.items|sort %}
-        <li>
-            {{ key }}: {{ value }}
-        </li>
-        {% endfor %}
-    </ul><hr/>
+    <div>{{ case.references }}</div><hr/>
 
     <div>{{ case.quote }}</div><hr/>
 
-    <div><img width="500" src="{{MEDIA_URL}}{{ case.figure }}" /></div>
+    <div><img width="500" src="{{ MEDIA_URL }}{{ case.figure }}" /></div>
     <div>{{ case.figure_legend }}</div>
+    <hr/>
+
+    <h4>Tags</h4>
+    <ul>
+        {% tags_for_object case as tag_list %}
+        {% for tag in tag_list %}
+            <li>{{ tag.name }}</li>
+        {% endfor %}
+    </ul>
+    <hr/>
+    <div><a href="{{MEDIA_URL}}{{ case.pdf }}">pdf</a></div>
 
 {% endblock %}

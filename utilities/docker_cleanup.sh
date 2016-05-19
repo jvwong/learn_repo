@@ -11,3 +11,7 @@
 #### use docker 'rm -v' when deleting containers OR
 #### add the --rm flag with 'docker run'
 #docker volume rm $(docker volume ls -fq dangling=true)
+
+## show stopped containers
+## docker ps -aq -f="exited=0"
+## docker rm $(docker ps -aq -f="exited=0")

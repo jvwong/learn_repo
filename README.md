@@ -65,8 +65,9 @@ The bash script `backup.sh` in the backups directory will dump the entire data v
 ### Restore
 Rebuild the services. Stop the containers as docker-compose auto-launches db service.
 ```
- $ docker-compose run web python manage.py makemigrations cases && docker-compose run web python manage.py migrate 
- $ docker-compose stop && docker-compose up -d 
+ $ docker-compose run web python manage.py makemigrations cases 
+ $ docker-compose run web python manage.py migrate 
+ $ docker-compose stop 
 ```
 
 Dump the data into the database container (learnrepo_db):
@@ -74,7 +75,7 @@ Dump the data into the database container (learnrepo_db):
  $ docker run --volumes-from learn_db -v /Users/jeffreywong/backups/2016/05/16:/backup busybox tar xvfz /backup/postgres-2016-05-16-0935.tar.gz
 ```
 
-Run the web service
+Run the web app
 ```
- $ docker-compose restart 
+ $ docker-compose up 
 ```
