@@ -6,6 +6,6 @@ from django.conf.urls import url
 from .views import CaseList, CaseDetail
 
 urlpatterns = [
-    url(r'^$', CaseList.as_view(), name='case-archive'),
+    url(r'^$', CaseList.as_view(), name='case-list'),
     url(r'^(?P<slug>[-\w]+)/$', CaseDetail.as_view(), name='case-detail')
 ]
