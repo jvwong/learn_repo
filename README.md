@@ -277,7 +277,6 @@ Let's make a remote backup directory then dump our tar archive into it.
 
 Get the volume associated with the database container (learn_db):
 ```
- local$ docker inspect  -f {{.Mounts}} learn_db # [{learnrepo_dbdata /var/lib/docker/volumes/learnrepo_dbdata/_data /var/lib/postgresql/data local rw true rprivate}]
  local$ docker run --volumes-from learn_db -v /home/dockeradmin/backups:/backup busybox tar xvfz /backup/postgres-2016-05-19-2029.tar.gz 
  local$ docker-compose --file=docker-compose-remote-ssd.yml up -d
 ```

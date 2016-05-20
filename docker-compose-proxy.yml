@@ -16,11 +16,13 @@ services:
       - db
   proxy:
     container_name: learn_proxy
-    image: learnproxy:0.1
+    image: proxy:1.0
     links:
       - web
     ports:
       - "80:80"
+    environment:
+      - ./proxy.env
 
 volumes:
   dbdata:
