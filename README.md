@@ -83,7 +83,7 @@ Restrict the permissions:
 
 Reboot the server just in case.
 
-### Create a generic host (docs)[https://docs.docker.com/machine/drivers/generic/]
+### Create a generic host [docs](https://docs.docker.com/machine/drivers/generic/)
 These are the relevant fields for the docker-machine create command:
 ```
  docker-machine create -d generic 
@@ -113,9 +113,36 @@ You should see some commands related to provisioning the remote server, copying 
     Checking connection to Docker...
     Docker is up and running!
 ```
-*Note 1: You may see a ``Error: Failed to get d-bus connection: operation not permitted` in Ubuntu 15.04. Upgrade to 15.10*
-*Note 2: Error: `Client is newer than server (client API version: 1.22, server API version: 1.21)`; Update accordingly*
+
+Make sure it works:
+```
+ local$ docker-machine ls 
+ local$ eval $(docker-machine env docker-serve)
+ local$ docker run hello-world
+```
+
+
+*Note 1: You may see a ``Error: Failed to get d-bus connection: operation not permitted` in Ubuntu 15.04. Upgrade to 15.10*  
+
+*Note 2: Error: `Client is newer than server (client API version: 1.22, server API version: 1.21)`; Update the apt sources [accordingly](https://blog.docker.com/2015/07/new-apt-and-yum-repos/)*
+```
+    # add the new gpg key
+    remote$ sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+    
+    # edit your /etc/apt/sources.list.d/docker.list
+    remote$ sudo vim /etc/apt/sources.list.d/docker.list
+    ... 
+    # Ubuntu Wily
+    deb https://apt.dockerproject.org/repo ubuntu-wily main
+    ... 
+    
+    $ sudo apt-get update    
+    # remove the old
+    $ sudo apt-get purge lxc-docker*     
+    # install the new
+    $ sudo apt-get install docker-engine
  
+```
 
 
 ### Create a Digital Ocean [host](https://docs.docker.com/machine/examples/ocean/)
@@ -146,8 +173,14 @@ Activate it:
  local$ eval $(docker-machine env learn-do)
 ```
 
+Run the alternative remote script (docker-compose-remote-ssd.yml):
+```
+ $ docker-compose --file=docker-compose-remote-ssd.yml run web python manage.py makemigrations cases
+ $ docker-compose --file=docker-compose-remote-ssd.yml run web python manage.py migrate
+ $ docker-compose --file=docker-compose-remote-ssd.yml up -d
+```
 
-### Use Compose to build the image
+### Development: Use Compose to run the containers locally
 ```
  $ docker-compose run web 
 ```
@@ -223,4 +256,20 @@ Dump the data into the database container (learnrepo_db):
 Run the web app
 ```
  $ docker-compose up 
+```
+
+## Image distribution
+### [Docker Hub](https://hub.docker.com/)
+You'll need to sign up for an account at Docker Hub first. 
+Login via cli:
+```
+ local$ docker login
+```
+
+Build the image (learnweb) with tag (0.1) and push to the Docker Hub:
+```
+ local$ cd <repo directory>
+ local$ docker build -t "learnweb:0.1" .
+ local$ docker tag "learnweb:0.1" "jvwong/learnweb:0.1"
+ local$ docker push jvwong/learnweb:0.1
 ```
