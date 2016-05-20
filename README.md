@@ -4,13 +4,16 @@
 
 ### Install some helpful setup commands (OSX)
 Command-completion
+
 ```
 files=(docker-machine docker-machine-wrapper docker-machine-prompt)
 for f in "${files[@]}"; do
   curl -L https://raw.githubusercontent.com/docker/machine/v$(docker-machine --version | tr -ds ',' ' ' | awk 'NR==1{print $(3)}')/contrib/completion/bash/$f.bash > `brew --prefix`/etc/bash_completion.d/$f
 done
 ```
+
 Start default on Boot in OSX. Create `~/Library/LaunchAgents/com.docker.machine.default.plist`
+
 ```
  <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -120,7 +123,6 @@ Make sure it works:
  local$ eval $(docker-machine env docker-serve)
  local$ docker run hello-world
 ```
-
 
 *Note 1: You may see a ``Error: Failed to get d-bus connection: operation not permitted` in Ubuntu 15.04. Upgrade to 15.10*  
 
@@ -241,6 +243,8 @@ The bash script `backup.sh` in the backups directory will dump the entire data v
 * Finally, tar the contents of `/var/lib/postgresql/data` in `DATA_CONTAINER_NAME` 
 
 ### Restore
+#### Local development version
+
 Rebuild the services. Stop the containers as docker-compose auto-launches db service.
 ```
  $ docker-compose run web python manage.py makemigrations cases 
@@ -250,7 +254,7 @@ Rebuild the services. Stop the containers as docker-compose auto-launches db ser
 
 Dump the data into the database container (learnrepo_db):
 ```
- $ docker run --volumes-from learn_db -v /Users/jeffreywong/backups/2016/05/16:/backup busybox tar xvfz /backup/postgres-2016-05-16-0935.tar.gz
+ $ docker run --volumes-from learn_db -v /Users/jeffreywong/backups/2016/05/19:/backup busybox tar xvfz /backup/postgres-2016-05-19-2029.tar.gz
 ```
 
 Run the web app
@@ -258,7 +262,31 @@ Run the web app
  $ docker-compose up 
 ```
 
-## Image distribution
+#### Remote Host 
+Of course, use docker-machine to hook into the remote machine (docker-serve), build it then stop it.
+```
+ local$ docker-machine ls
+ local$ eval $(docker-machine env docker-serve)
+ local$ docker-machine active  # docker-serve
+```
+ 
+Let's make a remote backup directory then dump our tar archive into it. 
+``` 
+ local$ docker-machine ssh docker-serve pwd  # /home/dockeradmin
+ local$ docker-machine ssh docker-serve mkdir backups
+ local$ docker-machine scp ~/backups/2016/05/19/postgres-2016-05-19-2029.tar.gz docker-serve:~/backups
+```
+
+Get the volume associated with the database container (learn_db):
+```
+ local$ docker inspect  -f {{.Mounts}} learn_db # [{learnrepo_dbdata /var/lib/docker/volumes/learnrepo_dbdata/_data /var/lib/postgresql/data local rw true rprivate}]
+ local$ docker run --volumes-from learn_db -v /home/dockeradmin/backups:/backup busybox tar xvfz /backup/postgres-2016-05-19-2029.tar.gz 
+ local$ docker-compose --file=docker-compose-remote-ssd.yml up -d
+```
+
+
+## Image distribution and Remote operations
+
 ### [Docker Hub](https://hub.docker.com/)
 You'll need to sign up for an account at Docker Hub first. 
 Login via cli:
@@ -273,3 +301,5 @@ Build the image (learnweb) with tag (0.1) and push to the Docker Hub:
  local$ docker tag "learnweb:0.1" "jvwong/learnweb:0.1"
  local$ docker push jvwong/learnweb:0.1
 ```
+
+
