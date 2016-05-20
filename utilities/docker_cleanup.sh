@@ -2,7 +2,7 @@
 #
 #### Stop containers, delete them, then get rid of dangling images.
 #docker stop $(docker ps -aq)
-#docker rm $(docker ps -aq)
+# docker rm -v $(docker ps -aq)
 #
 #### Remove dangling images
 #docker rmi $(docker images -f "dangling=true" -q)

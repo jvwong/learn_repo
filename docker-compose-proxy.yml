@@ -1,0 +1,27 @@
+version: '2'
+services:
+  db:
+    container_name: learn_db
+    env_file:
+      - ./web.env
+    image: postgres:9.5.2
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+  web:
+    container_name: learn_web
+    image: jvwong/learnweb:0.1
+    environment:
+      ENV: DEV
+    depends_on:
+      - db
+  proxy:
+    container_name: learn_proxy
+    image: learnproxy:0.1
+    links:
+      - web
+    ports:
+      - "80:80"
+
+volumes:
+  dbdata:
+    driver: local

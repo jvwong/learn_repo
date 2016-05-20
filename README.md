@@ -146,6 +146,7 @@ Make sure it works:
  
 ```
 
+*Note 3: All commands and files are assumed to lie on the remote host (see database data recovery below)*
 
 ### Create a Digital Ocean [host](https://docs.docker.com/machine/examples/ocean/)
 Create an API token from your Digital Ocean account. Be sure to give it write access.
@@ -234,10 +235,7 @@ When the model is changed, this must be versioned and commited. Within a running
 ## Data Backup & Restoration
 ### Backup 
 The bash script `backup.sh` in the backups directory will dump the entire data volume into a tar file on the local machine. 
-*Note: the official postgres Dockerfile defines a volume at /var/lib/postgresql/data.*
-```
- asd
-```
+* Note: the official postgres Dockerfile defines a volume at /var/lib/postgresql/data. *
 * Here we launch a new container (busybox), using the volumes of `DATA_CONTAINER_NAME` via the `--volumes-from` option
 * Mount a user-defined host directory `BACKUP_PATH` as /backup inside the new container 
 * Finally, tar the contents of `/var/lib/postgresql/data` in `DATA_CONTAINER_NAME` 
@@ -302,4 +300,21 @@ Build the image (learnweb) with tag (0.1) and push to the Docker Hub:
  local$ docker push jvwong/learnweb:0.1
 ```
 
+## Nginx
+Let's put this behind a reverse proxy. See deploy/learnproxy for files. Again, make sure you are connected to the remote machine.
+*Note: the proxy pass should be the <service>:<port exposed> as in the Dockerfile*
 
+Build the nginx image 
+```
+ local$ docker build --no-cache -t learnproxy:0.1 . 
+```
+
+Now go back to the repo directory and do the database update:
+```
+ local$ docker-compose --file=docker-compose-proxy.yml run web python manage.py makemigrations cases
+ local$ docker-compose --file=docker-compose-proxy.yml run web python manage.py migrate 
+ local$ docker-compose --file=docker-compose-proxy.yml up -d
+ 
+```
+
+This should be running on port 80.
