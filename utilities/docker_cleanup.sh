@@ -14,4 +14,4 @@
 
 ## show stopped containers
 ## docker ps -aq -f="exited=0"
-## docker rm $(docker ps -aq -f="exited=0")
+docker rm $(docker ps -aq -f="exited=0")

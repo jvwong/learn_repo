@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load tagging_tags %}
+
+{% block content %}
+    <h1>{{ article.title }}</h1>
+
+    <div>
+        <h3>{{ article.title }}</h3>
+        <span>{{ article.authors }}</span>
+    </div>
+    <hr/>
+
+    <div>{{ article.journal }}</div>
+
+    <div>{{ article.volume }}</div><hr/>
+    <div>{{ article.page_range }}</div><hr/>
+    <div>{{ article.pub_date|date:"M Y" }}</div><hr/>
+
+    <h4>Tags</h4>
+    <ul>
+        {% tags_for_object article as tag_list %}
+        {% for tag in tag_list %}
+            <li><a href="{% url 'article-tag-list' tag.name %}">{{ tag.name }}</a></li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

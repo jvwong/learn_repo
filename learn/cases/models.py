@@ -19,6 +19,7 @@ class Article(TimeStampedModel):
     page_range = IntegerRangeField()
 
     slug = models.SlugField(unique=True, max_length=250)
+    tags = TagField(help_text="Separate tags with commas.")
 
     class Meta:
         ordering = ["pub_date"]
@@ -26,6 +27,9 @@ class Article(TimeStampedModel):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('article-detail', args=[str(self.slug)])
 
 
 def case_directory_path(instance, filename):
@@ -37,22 +41,42 @@ class Case(TimeStampedModel):
     title = models.CharField(max_length=250, unique=True)
     subtitle = models.CharField(max_length=250, blank=True)
     article = models.OneToOneField(Article)
-    quick_summary = MarkupField(blank=True, markup_type='markdown')
-
-    author_profile = MarkupField(blank=True, markup_type='markdown')
-    context = MarkupField(blank=True, markup_type='markdown')
-    question = MarkupField(blank=True, markup_type='markdown')
-    researcher_goals = MarkupField(blank=True, markup_type='markdown')
-    approach = MarkupField(blank=True, markup_type='markdown')
-    summary = MarkupField(blank=True, markup_type='markdown')
-    references = MarkupField(blank=True, markup_type='markdown')
-    quote = MarkupField(blank=True, markup_type='markdown')
+    quick_summary = MarkupField(blank=True,
+                                markup_type='markdown',
+                                help_text='Markdown enabled')
+    author_profile = MarkupField(blank=True,
+                                 markup_type='markdown',
+                                 help_text='Markdown enabled')
+    context = MarkupField(blank=True,
+                          markup_type='markdown',
+                          help_text='Markdown enabled')
+    question = MarkupField(blank=True,
+                           markup_type='markdown',
+                           help_text='Markdown enabled')
+    researcher_goals = MarkupField(blank=True,
+                                   markup_type='markdown',
+                                   help_text='Markdown enabled')
+    approach = MarkupField(blank=True,
+                           markup_type='markdown',
+                           help_text='Markdown enabled')
+    summary = MarkupField(blank=True,
+                          markup_type='markdown',
+                          help_text='Markdown enabled')
+    references = MarkupField(blank=True,
+                             markup_type='markdown',
+                             help_text='Markdown enabled')
+    quote = MarkupField(blank=True,
+                        markup_type='markdown',
+                        help_text='Markdown enabled')
 
     figure = models.ImageField(upload_to=case_directory_path, blank=True)
-    figure_legend = MarkupField(blank=True, markup_type='markdown')
+    figure_legend = MarkupField(blank=True,
+                                markup_type='markdown',
+                                help_text='Markdown enabled')
     pdf = models.FileField(upload_to=case_directory_path, blank=True)
+
     slug = models.SlugField(unique=True, max_length=250)
-    tags = TagField(help_text="Separate tags with spaces.")
+    tags = TagField(help_text="Separate tags with commas.")
 
     class Meta:
         ordering = ["created"]

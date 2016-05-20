@@ -2,6 +2,151 @@
 
 ## Docker 
 
+### Install some helpful setup commands (OSX)
+Command-completion
+```
+files=(docker-machine docker-machine-wrapper docker-machine-prompt)
+for f in "${files[@]}"; do
+  curl -L https://raw.githubusercontent.com/docker/machine/v$(docker-machine --version | tr -ds ',' ' ' | awk 'NR==1{print $(3)}')/contrib/completion/bash/$f.bash > `brew --prefix`/etc/bash_completion.d/$f
+done
+```
+Start default on Boot in OSX. Create `~/Library/LaunchAgents/com.docker.machine.default.plist`
+```
+ <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>EnvironmentVariables</key>
+        <dict>
+            <key>PATH</key>
+            <string>/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin</string>
+        </dict>
+        <key>Label</key>
+        <string>com.docker.machine.default</string>
+        <key>ProgramArguments</key>
+        <array>
+            <string>/usr/local/bin/docker-machine</string>
+            <string>start</string>
+            <string>default</string>
+        </array>
+        <key>RunAtLoad</key>
+        <true/>
+    </dict>
+</plist>
+```
+Then add the following to your ~.bash_profile
+```
+ eval $(docker-machine env default)
+```
+
+
+### Create new dockeradmin user on remote server with private-public key authentication.
+Create a new user on the remote host and allow sudo access: 
+```
+ remote$ sudo adduser dockeradmin
+```
+
+Add the following to /etc/sudoers
+```
+ remote$ sudo visudo
+ 
+ ...
+ dockeradmin ALL=(ALL) NOPASSWD: ALL
+```
+
+If you've locked down your server, you may need to update the ssh user access:
+```
+ remote$ sudo vim /etc/ssh/sshd_config
+ ... 
+  
+ AllowUsers ... dockeradmin ...
+```
+
+Perform all remote ssh login with keys. Generate the public (id_rsa.pub) and private (id_rsa) keys in ~/.ssh:
+```
+ local$ ssh-keygen
+```
+
+Create an authorized_keys in the .ssh directory of the remote computer that you want to connect to: 
+```
+ remote$ su - dockeradmin
+ dockeradmin@remote$ mkdir .ssh
+ dockeradmin@remote$ chmod 700 .ssh
+```
+
+Paste in your local public key into `~/.ssh/authorized_keys`.
+
+Restrict the permissions:
+```
+ dockeradmin@remote-server:~$ chmod 600 .ssh/authorized_keys
+```
+
+Reboot the server just in case.
+
+### Create a generic host (docs)[https://docs.docker.com/machine/drivers/generic/]
+These are the relevant fields for the docker-machine create command:
+```
+ docker-machine create -d generic 
+   --generic-ip-address {ip-address} \
+   --generic-ssh-key {private-key} \
+   --generic-ssh-user {username} \
+   --generic-ssh-port {ssh-port} {docker-vm-name}
+```
+ So this would translate to something like this for a docker-vm-name of `docker-serve`:
+ 
+```
+ local$ docker-machine create --driver generic --generic-ip-address=192.168.0.10 --generic-ssh-key=$HOME/.ssh/id_rsa --generic-ssh-user=dockeradmin --generic-ssh-port=22 docker-serve
+```
+
+You should see some commands related to provisioning the remote server, copying certs...
+```
+    Importing SSH key...
+    Waiting for machine to be running, this may take a few minutes...
+    Detecting operating system of created instance...
+    Waiting for SSH to be available...
+    Detecting the provisioner...
+    Provisioning with ubuntu(systemd)...
+    Installing Docker...
+    Copying certs to the local machine directory...
+    Copying certs to the remote machine...
+    Setting Docker configuration on the remote daemon...
+    Checking connection to Docker...
+    Docker is up and running!
+```
+*Note 1: You may see a ``Error: Failed to get d-bus connection: operation not permitted` in Ubuntu 15.04. Upgrade to 15.10*
+*Note 2: Error: `Client is newer than server (client API version: 1.22, server API version: 1.21)`; Update accordingly*
+ 
+
+
+### Create a Digital Ocean [host](https://docs.docker.com/machine/examples/ocean/)
+Create an API token from your Digital Ocean account. Be sure to give it write access.
+
+Store this token (LEARN_DO_TOKEN) as an env variable for convenience:
+```
+ local$ vim ~/.bash_profile
+ ... 
+ LEARN_DO_TOKEN=<your token here>
+ ...
+ local$ source ~/.bash_profile
+ local$ echo $LEARN_DO_TOKEN # Should output the token 
+```
+
+Create the remote hostnamed `learn-do`:
+```
+ local$ docker-machine create --driver digitalocean --digitalocean-access-token $LEARN_DO_TOKEN learn-do
+```
+
+Check the creation:
+```
+ local$ docker-machine ls
+```
+
+Activate it:
+```
+ local$ eval $(docker-machine env learn-do)
+```
+
+
 ### Use Compose to build the image
 ```
  $ docker-compose run web 

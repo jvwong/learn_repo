@@ -1,5 +1,15 @@
 from django.views.generic import ListView, DetailView
-from .models import Case
+from .models import Case, Article
+
+
+class ArticleList(ListView):
+    template_name = "cases/article_list.html"
+    model = Article
+
+
+class ArticleDetail(DetailView):
+    template_name = "cases/article_detail.html"
+    queryset = Article.objects.all()
 
 
 class CaseList(ListView):

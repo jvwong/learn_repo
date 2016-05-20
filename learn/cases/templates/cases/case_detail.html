@@ -5,7 +5,7 @@
 
 {% block content %}
     <h1>{{ case.title }}</h1>
-    <div>{{ case.test }}</div>
+
     <div>
         <h3>{{ case.article.title }}</h3>
         <span>{{ case.article.authors.0 }}</span>
@@ -34,7 +34,7 @@
     <ul>
         {% tags_for_object case as tag_list %}
         {% for tag in tag_list %}
-            <li>{{ tag.name }}</li>
+            <li><a href="{% url 'case-tag-list' tag.name %}">{{ tag.name }}</a></li>
         {% endfor %}
     </ul>
     <hr/>
