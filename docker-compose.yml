@@ -10,17 +10,30 @@ services:
   web:
     container_name: learn_web
     build: .
-    ports:
-      - "41960:8000"
     volumes:
       - ./learn:/learn
-      - ./learn/static:/learn/static
-      - ./learn/media:/learn/media
+      - webstatic:/learn/static
+      - webmedia:/learn/media
     depends_on:
       - db
     env_file:
       - ./environment/dev/web.env
+  proxy:
+    container_name: learn_proxy
+    image: proxy:1.0
+    links:
+      - web
+    ports:
+      - "41960:80"
+    env_file:
+      - ./environment/dev/proxy.env
+    volumes_from:
+      - web
 
 volumes:
   dbdata:
+    driver: local
+  webstatic:
+    driver: local
+  webmedia:
     driver: local

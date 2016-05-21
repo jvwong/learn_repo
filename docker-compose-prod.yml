@@ -3,7 +3,7 @@ services:
   db:
     container_name: learn_db
     env_file:
-      - ./environment/remote/db.env
+      - ./environment/prod/db.env
     image: postgres:9.5.2
     volumes:
       - dbdata:/var/lib/postgresql/data
@@ -13,7 +13,10 @@ services:
     depends_on:
       - db
     env_file:
-      - ./environment/remote/web.env
+      - ./environment/prod/web.env
+    volumes:
+      - webstatic:/learn/static
+      - webmedia:/learn/media
   proxy:
     container_name: learn_proxy
     image: proxy:1.0
@@ -22,8 +25,15 @@ services:
     ports:
       - "80:80"
     env_file:
-      - ./environment/remote/proxy.env
+      - ./environment/prod/proxy.env
+    volumes_from:
+      - web
 
 volumes:
   dbdata:
     driver: local
+  webstatic:
+    driver: local
+  webmedia:
+    driver: locals
+

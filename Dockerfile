@@ -12,12 +12,10 @@ RUN mkdir /learn
 WORKDIR /learn
 COPY learn /learn
 
-# Apply database migrations
-RUN python manage.py collectstatic --noinput
-
 EXPOSE 8000
 USER uwsgi
 
 COPY cmd.sh /
 CMD ["/cmd.sh"]
+
 

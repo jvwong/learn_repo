@@ -316,3 +316,11 @@ Now go back to the repo directory and do the database update:
 ```
 
 This should be running on port 80.
+
+
+## TODO
+Very non-containish stuff to deal with...
+- need to develop pipeline for copying over static and media files
+- sharing in a volume
+- letting nginx server these
+-- run busybox with volumes from lwearn_web to a nginx friendly destination/volume?
