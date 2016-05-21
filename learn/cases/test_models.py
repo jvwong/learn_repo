@@ -3,6 +3,7 @@ from datetime import date
 
 from cases.models import Article, Case
 
+# Running:
 
 class ArticleTests(TestCase):
     def setUp(self):
@@ -14,20 +15,23 @@ class ArticleTests(TestCase):
             volume=0,
             issue=0,
             page_range=(0, 1),
-            slug="a-slug"
+            url="http://www.example.com",
+            slug="a-slug",
+            tags="one, two, three"
         )
 
     def test_create(self):
         self.assertEqual(Article.objects.count(), 1)
-        object = Article.objects.get(title="A title")
-        self.assertEqual(object.title, "A title")
-        self.assertEqual(object.authors, ['Author Last'])
-        self.assertEqual(object.journal, 'A journal')
-        self.assertIsInstance(object.pub_date, date)
-        self.assertEqual(object.volume, 0)
-        self.assertEqual(object.issue, 0)
-        self.assertFalse(object.page_range.isempty)
-        self.assertEqual(object.slug, 'a-slug')
+        obj = Article.objects.get(title="A title")
+        self.assertEqual(obj.title, "A title")
+        self.assertEqual(obj.authors, ['Author Last'])
+        self.assertEqual(obj.journal, 'A journal')
+        self.assertIsInstance(obj.pub_date, date)
+        self.assertEqual(obj.volume, 0)
+        self.assertEqual(obj.issue, 0)
+        self.assertEqual(obj.url, "http://www.example.com")
+        self.assertFalse(obj.page_range.isempty)
+        self.assertEqual(obj.slug, 'a-slug')
 
 
 class CaseTests(TestCase):
@@ -40,6 +44,7 @@ class CaseTests(TestCase):
             volume=0,
             issue=0,
             page_range=(0, 1),
+            url="http://www.example.com",
             slug="a-slug"
         )
 
@@ -48,17 +53,18 @@ class CaseTests(TestCase):
             title="A title",
             subtitle="A subtitle",
             article=Article.objects.get(title="A title"),
-            quick_summary={"1": "A summary"},
+            quick_summary="A summary",
             author_profile="An author profile",
             context="A context",
             question="A  question",
             researcher_goals="A researcher goal",
             approach="An approach",
             summary="A summary",
-            references={"1": "A reference"},
+            references="A reference",
             quote="A quote",
             figure_legend="A figure legend",
-            slug="a-slug"
+            slug="a-slug",
+            tags="one, two, three"
         )
 
         self.assertEqual(Case.objects.count(), 1)

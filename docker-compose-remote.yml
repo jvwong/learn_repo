@@ -3,17 +3,17 @@ services:
   db:
     container_name: learn_db
     env_file:
-      - ./web.env
+      - ./environment/remote/db.env
     image: postgres:9.5.2
     volumes:
       - dbdata:/var/lib/postgresql/data
   web:
     container_name: learn_web
     image: jvwong/learnweb:0.1
-    environment:
-      ENV: DEV
     depends_on:
       - db
+    env_file:
+      - ./environment/remote/web.env
   proxy:
     container_name: learn_proxy
     image: proxy:1.0
@@ -21,8 +21,8 @@ services:
       - web
     ports:
       - "80:80"
-    environment:
-      - ./proxy.env
+    env_file:
+      - ./environment/remote/proxy.env
 
 volumes:
   dbdata:

@@ -3,25 +3,23 @@ services:
   db:
     container_name: learn_db
     env_file:
-      - ./web.env
+      - ./environment/dev/db.env
     image: postgres:9.5.2
     volumes:
       - dbdata:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
   web:
     container_name: learn_web
     build: .
     ports:
       - "41960:8000"
-    environment:
-      ENV: DEV
     volumes:
       - ./learn:/learn
       - ./learn/static:/learn/static
       - ./learn/media:/learn/media
     depends_on:
       - db
+    env_file:
+      - ./environment/dev/web.env
 
 volumes:
   dbdata:

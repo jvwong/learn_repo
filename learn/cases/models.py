@@ -18,6 +18,7 @@ class Article(TimeStampedModel):
     issue = models.IntegerField(blank=True, null=True)
     page_range = IntegerRangeField()
 
+    url = models.URLField(blank=True, null=True)
     slug = models.SlugField(unique=True, max_length=250)
     tags = TagField(help_text="Separate tags with commas.")
 

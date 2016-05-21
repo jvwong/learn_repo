@@ -178,9 +178,9 @@ Activate it:
 
 Run the alternative remote script (docker-compose-remote-ssd.yml):
 ```
- $ docker-compose --file=docker-compose-remote-ssd.yml run web python manage.py makemigrations cases
- $ docker-compose --file=docker-compose-remote-ssd.yml run web python manage.py migrate
- $ docker-compose --file=docker-compose-remote-ssd.yml up -d
+ $ docker-compose --file=docker-compose-remote.yml run web python manage.py makemigrations cases
+ $ docker-compose --file=docker-compose-remote.yml run web python manage.py migrate
+ $ docker-compose --file=docker-compose-remote.yml up -d
 ```
 
 ### Development: Use Compose to run the containers locally
@@ -277,8 +277,7 @@ Let's make a remote backup directory then dump our tar archive into it.
 
 Get the volume associated with the database container (learn_db):
 ```
- local$ docker run --volumes-from learn_db -v /home/dockeradmin/backups:/backup busybox tar xvfz /backup/postgres-2016-05-19-2029.tar.gz 
- local$ docker-compose --file=docker-compose-remote-ssd.yml up -d
+ local$ docker run --volumes-from learn_db -v /home/dockeradmin/backups:/backup busybox tar xvfz /backup/postgres-2016-05-19-2029.tar.gz
 ```
 
 
@@ -310,9 +309,9 @@ Build the nginx image
 
 Now go back to the repo directory and do the database update:
 ```
- local$ docker-compose --file=docker-compose-proxy.yml run web python manage.py makemigrations cases
- local$ docker-compose --file=docker-compose-proxy.yml run web python manage.py migrate 
- local$ docker-compose --file=docker-compose-proxy.yml up -d
+ local$ docker-compose --file=docker-compose-remote.yml run web python manage.py makemigrations cases
+ local$ docker-compose --file=docker-compose-remote.yml run web python manage.py migrate 
+ local$ docker-compose --file=docker-compose-remote.yml up -d
  
 ```
 

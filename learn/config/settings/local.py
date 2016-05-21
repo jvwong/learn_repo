@@ -1,6 +1,8 @@
 from .base import *
+import os
+from .secret_key import SECRET_KEY_DEFAULT
 
-DEBUG = True
+SECRET_KEY = bool(os.environ.get('SECRET_KEY', SECRET_KEY_DEFAULT))
 
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ['127.0.0.1']
@@ -17,6 +19,5 @@ DATABASES = {
     }
 }
 
-INSTALLED_APPS += [
+INSTALLED_APPS += []
 
-]

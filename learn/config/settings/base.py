@@ -6,7 +6,7 @@ import os
 PROJECT_NAME = "learn"
 
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
-DEBUG = True
+DEBUG = bool(os.environ.get('DEBUG', False))
 
 #Pre-configured paths
 SETTINGS_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -167,6 +167,6 @@ LOGGING = {
     }
 }
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = '0g6yk+xa!&xl%@rgf%eh%k_10v7p!ts6c00$0by@fx)95w(&pn'
-# from .secret_key import SECRET_KEY
+
+
+

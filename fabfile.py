@@ -7,7 +7,7 @@
 # import os
 # import random
 #
-# APP_NAME = "jeffreyvwong"
+# APP_NAME = "learn"
 # REPO_URL = 'https://github.com/jvwong/homepage.git'
 #
 # ### ***** BRING Deployment *****
