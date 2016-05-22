@@ -145,74 +145,7 @@ Make sure it works:
     $ sudo apt-get install docker-engine
  
 ```
-
 *Note 3: All commands and files are assumed to lie on the remote host (see database data recovery below)*
-
-### Create a Digital Ocean [host](https://docs.docker.com/machine/examples/ocean/)
-Create an API token from your Digital Ocean account. Be sure to give it write access.
-
-Store this token (LEARN_DO_TOKEN) as an env variable for convenience:
-```
- local$ vim ~/.bash_profile
- ... 
- LEARN_DO_TOKEN=<your token here>
- ...
- local$ source ~/.bash_profile
- local$ echo $LEARN_DO_TOKEN # Should output the token 
-```
-
-Create the remote hostnamed `learn-do`:
-```
- local$ docker-machine create --driver digitalocean --digitalocean-access-token $LEARN_DO_TOKEN learn-do
-```
-
-Check the creation:
-```
- local$ docker-machine ls
-```
-
-Activate it:
-```
- local$ eval $(docker-machine env learn-do)
-```
-
-Run the alternative remote script (docker-compose-remote-ssd.yml):
-```
- $ docker-compose --file=docker-compose-remote.yml run web python manage.py makemigrations cases
- $ docker-compose --file=docker-compose-remote.yml run web python manage.py migrate
- $ docker-compose --file=docker-compose-remote.yml up -d
-```
-
-### Development: Use Compose to run the containers locally
-```
- $ docker-compose run web 
-```
-This instructs Compose to run ```python manage.py migrate``` in a container, using the web service’s image and configuration. Because the web image doesn’t exist yet, Compose builds it from the current directory, as specified by the build: . line in docker-compose.yml.
-
-Once the web service image is built, Compose runs it and executes the ```python manage.py migrate``` command in the container. This command instructs Django to create the database models.
-
-
-```
- $ docker-compose up -d
-```
-
-This runs the app (background).
-
-List the volumes: You should see `learnrepo_dbdata` named volume. 
-```
- $ docker volume ls
- $ docker volume inspect learnrepo_dbdata
-```
-You should see something like this for the `inspect`:
-```
- [
-    {
-        "Name": "learnrepo_dbdata",
-        "Driver": "local",
-        "Mountpoint": "/mnt/sda1/var/lib/docker/volumes/learnrepo_dbdata/_data"
-    }
-]
-```
 
 ## Starting from scratch
 ### Create Super User
@@ -252,7 +185,7 @@ Rebuild the services. Stop the containers as docker-compose auto-launches db ser
 
 Dump the data into the database container (learnrepo_db):
 ```
- $ docker run --volumes-from learn_db -v /Users/jeffreywong/backups/2016/05/19:/backup busybox tar xvfz /backup/postgres-2016-05-19-2029.tar.gz
+ $ docker run --rm --volumes-from learn_db -v /Users/jeffreywong/backups/2016/05/19:/backup busybox tar xvfz /backup/postgres-2016-05-19-2029.tar.gz
 ```
 
 Run the web app
@@ -272,55 +205,10 @@ Let's make a remote backup directory then dump our tar archive into it.
 ``` 
  local$ docker-machine ssh docker-serve pwd  # /home/dockeradmin
  local$ docker-machine ssh docker-serve mkdir backups
- local$ docker-machine scp ~/backups/2016/05/19/postgres-2016-05-19-2029.tar.gz docker-serve:~/backups
+ local$ docker-machine scp ~/backups/<path/to/tar.gz> docker-serve:~/backups
 ```
 
 Get the volume associated with the database container (learn_db):
 ```
- local$ docker run --volumes-from learn_db -v /home/dockeradmin/backups:/backup busybox tar xvfz /backup/postgres-2016-05-19-2029.tar.gz
+ local$ docker run --rm --volumes-from learn_db -v /home/dockeradmin/backups:/backup busybox tar xvfz /backup/<tar.gz file>
 ```
-
-
-## Image distribution and Remote operations
-
-### [Docker Hub](https://hub.docker.com/)
-You'll need to sign up for an account at Docker Hub first. 
-Login via cli:
-```
- local$ docker login
-```
-
-Build the image (learnweb) with tag (0.1) and push to the Docker Hub:
-```
- local$ cd <repo directory>
- local$ docker build -t "learnweb:0.1" .
- local$ docker tag "learnweb:0.1" "jvwong/learnweb:0.1"
- local$ docker push jvwong/learnweb:0.1
-```
-
-## Nginx
-Let's put this behind a reverse proxy. See deploy/learnproxy for files. Again, make sure you are connected to the remote machine.
-*Note: the proxy pass should be the <service>:<port exposed> as in the Dockerfile*
-
-Build the nginx image 
-```
- local$ docker build --no-cache -t learnproxy:0.1 . 
-```
-
-Now go back to the repo directory and do the database update:
-```
- local$ docker-compose --file=docker-compose-remote.yml run web python manage.py makemigrations cases
- local$ docker-compose --file=docker-compose-remote.yml run web python manage.py migrate 
- local$ docker-compose --file=docker-compose-remote.yml up -d
- 
-```
-
-This should be running on port 80.
-
-
-## TODO
-Very non-containish stuff to deal with...
-- need to develop pipeline for copying over static and media files
-- sharing in a volume
-- letting nginx server these
--- run busybox with volumes from lwearn_web to a nginx friendly destination/volume?

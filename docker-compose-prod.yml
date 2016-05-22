@@ -9,7 +9,7 @@ services:
       - dbdata:/var/lib/postgresql/data
   web:
     container_name: learn_web
-    image: jvwong/learnweb:0.1
+    image: jvwong/learn_repo:latest
     depends_on:
       - db
     env_file:
@@ -19,7 +19,7 @@ services:
       - webmedia:/learn/media
   proxy:
     container_name: learn_proxy
-    image: proxy:1.0
+    image: jvwong/proxy:1.0
     links:
       - web
     ports:
@@ -35,5 +35,5 @@ volumes:
   webstatic:
     driver: local
   webmedia:
-    driver: locals
+    driver: local
 
