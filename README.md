@@ -1,5 +1,13 @@
 # Learn Project
 
+## Django
+### Testing
+Assuming that the web container is running, just hook in:
+```
+ local$ docker exec -it learn_web python manage.py test <optional: dot-separated module>
+```
+ 
+
 ## Docker 
 
 ### Install some helpful setup commands (OSX)
