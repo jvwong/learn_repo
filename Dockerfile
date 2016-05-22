@@ -4,7 +4,7 @@ FROM python:3.5.1
 RUN groupadd -r uwsgi && useradd -r -m -g uwsgi uwsgi
 
 # Install dependencies
-ADD requirements/base.txt /tmp/requirements.txt
+ADD requirements.txt /tmp/requirements.txt
 RUN cd /tmp && pip install -r requirements.txt
 
 # Create the project directory
