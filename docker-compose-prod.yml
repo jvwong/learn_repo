@@ -3,20 +3,20 @@ services:
   db:
     container_name: learn_db
     env_file:
-      - ./environment/prod/db.env
+      - ./environment/prod.env
     image: postgres:9.5.2
     volumes:
       - dbdata:/var/lib/postgresql/data
   web:
     container_name: learn_web
     image: jvwong/learn_repo:latest
-    depends_on:
-      - db
-    env_file:
-      - ./environment/prod/web.env
     volumes:
       - webstatic:/learn/static
       - webmedia:/learn/media
+    depends_on:
+      - db
+    env_file:
+      - ./environment/prod.env
   proxy:
     container_name: learn_proxy
     image: jvwong/proxy:1.0
@@ -25,7 +25,7 @@ services:
     ports:
       - "80:80"
     env_file:
-      - ./environment/prod/proxy.env
+      - ./environment/prod.env
     volumes_from:
       - web
 

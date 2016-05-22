@@ -1,7 +1,7 @@
 FROM python:3.5.1
 
 # create the user
-RUN groupadd -r uwsgi && useradd -r -g uwsgi uwsgi
+RUN groupadd -r uwsgi && useradd -r -m -g uwsgi uwsgi
 
 # Install dependencies
 ADD requirements/base.txt /tmp/requirements.txt
@@ -14,6 +14,11 @@ COPY learn /learn
 
 EXPOSE 8000
 USER uwsgi
+
+# Temp -- see logging chapter
+RUN mkdir -p ~/log/gunicorn
+RUN touch ~/log/gunicorn/gunicorn_access.log
+RUN touch ~/log/gunicorn/gunicorn_error.log
 
 COPY cmd.sh /
 CMD ["/cmd.sh"]

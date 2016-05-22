@@ -32,6 +32,7 @@ class ArticleTests(TestCase):
         self.assertEqual(obj.url, "http://www.example.com")
         self.assertFalse(obj.page_range.isempty)
         self.assertEqual(obj.slug, 'a-slug')
+        self.assertEqual(obj.tags, 'one, two, three')
 
 
 class CaseTests(TestCase):
@@ -45,7 +46,8 @@ class CaseTests(TestCase):
             issue=0,
             page_range=(0, 1),
             url="http://www.example.com",
-            slug="a-slug"
+            slug="a-slug",
+            tags="one, two, three"
         )
 
     def test_create(self):

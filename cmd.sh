@@ -6,7 +6,7 @@ set -e
 
 if [ "$ENV" = 'DEV' ]; then
 	echo "Running Development Server"
-    exec gunicorn config.wsgi:application -b 0.0.0.0:8000 --reload --log-file=-
+    exec gunicorn -c /learn/config/gunicorn_dev.py config.wsgi:application
 else
-	echo "Running Production Server"
+	echo "No Production Server configured"
 fi

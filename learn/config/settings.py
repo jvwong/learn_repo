@@ -5,12 +5,14 @@ import os
 
 PROJECT_NAME = "learn"
 
+# NO default
+SECRET_KEY = os.environ.get('SECRET_KEY')
+
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 DEBUG = bool(os.environ.get('DEBUG', False))
 
 #Pre-configured paths
-SETTINGS_DIR = os.path.abspath(os.path.dirname(__file__))
-CONFIG_DIR = os.path.abspath(os.path.join(SETTINGS_DIR, ".."))
+CONFIG_DIR = os.path.abspath(os.path.dirname(__file__))
 PROJECT_DIR = os.path.abspath(os.path.join(CONFIG_DIR, ".."))
 REPO_DIR = os.path.abspath(os.path.join(PROJECT_DIR, ".."))
 STATIC_PATH = os.path.abspath(os.path.join(REPO_DIR, "static"))
@@ -42,6 +44,20 @@ USE_L10N = True
 
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = False
+
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS')
+
+# Database - NO defaults
+DATABASES = {
+    'default': {
+        'ENGINE': os.environ.get('DATABASE_ENGINE'),
+        'NAME': os.environ.get('DATABASE_NAME'),
+        'USER': os.environ.get('DATABASE_USER'),
+        'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
+        'HOST': os.environ.get('DATABASE_HOST'),
+        'PORT': os.environ.get('DATABASE_PORT')
+    }
+}
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"

@@ -3,7 +3,7 @@ services:
   db:
     container_name: learn_db
     env_file:
-      - ./environment/dev/db.env
+      - ./environment/dev.env
     image: postgres:9.5.2
     volumes:
       - dbdata:/var/lib/postgresql/data
@@ -17,7 +17,7 @@ services:
     depends_on:
       - db
     env_file:
-      - ./environment/dev/web.env
+      - ./environment/dev.env
   proxy:
     container_name: learn_proxy
     image: jvwong/proxy:1.0
@@ -26,7 +26,7 @@ services:
     ports:
       - "41960:80"
     env_file:
-      - ./environment/dev/proxy.env
+      - ./environment/dev.env
     volumes_from:
       - web
 
