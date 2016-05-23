@@ -4,9 +4,6 @@
 # docker stop $(docker ps -aq)
 # docker rm -v $(docker ps -aq)
 
-#### Remove dangling images
-docker rmi $(docker images -f "dangling=true" -q)
-
 #### Get rid of dangling volumes
 #### use docker 'rm -v' when deleting containers OR
 #### add the --rm flag with 'docker run'
@@ -15,3 +12,6 @@ docker rmi $(docker images -f "dangling=true" -q)
 ## remove stopped containers
 docker rm -v $(docker ps -aq -f="exited=0")
 docker rm -v $(docker ps -aq -f="exited=1")
+
+#### Remove dangling images
+docker rmi $(docker images -f "dangling=true" -q)

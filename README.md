@@ -166,50 +166,29 @@ Now create a super user inside the running container:
 ```
 
 ### Database migrations
-When the model is changed, this must be versioned and commited. Within a running container:
-```
- $ docker exec learnrepo_web_1 python manage.py makemigrations
- $ docker exec learnrepo_web_1 python manage.py migrate 
-```
-
+This is contained in the `django_initialize.sh` utility.
 
 ## Data Backup & Restoration
 ### Backup 
-The bash script `backup.sh` in the backups directory will dump the entire data volume into a tar file on the local machine. 
+Backup via the `backup.sh` utility. This will dump the entire data volume into a tar file on the local machine. 
 * Note: the official postgres Dockerfile defines a volume at /var/lib/postgresql/data. *
-* Here we launch a new container (busybox), using the volumes of `DATA_CONTAINER_NAME` via the `--volumes-from` option
-* Mount a user-defined host directory `BACKUP_PATH` as /backup inside the new container 
-* Finally, tar the contents of `/var/lib/postgresql/data` in `DATA_CONTAINER_NAME` 
 
 ### Restore
-#### Local development version
-
-Rebuild the services. Stop the containers as docker-compose auto-launches db service.
-```
- $ docker-compose run web python manage.py makemigrations cases 
- $ docker-compose run web python manage.py migrate 
- $ docker-compose stop 
-```
-
+#### Local 
 Dump the data into the database container (learnrepo_db):
 ```
  $ docker run --rm --volumes-from learn_db -v /Users/jeffreywong/backups/2016/05/19:/backup busybox tar xvfz /backup/postgres-2016-05-19-2029.tar.gz
 ```
 
-Run the web app
-```
- $ docker-compose up 
-```
-
 #### Remote Host 
-Of course, use docker-machine to hook into the remote machine (docker-serve), build it then stop it.
+Of course, use docker-machine to hook into the remote machine (docker-serve).
 ```
  local$ docker-machine ls
  local$ eval $(docker-machine env docker-serve)
  local$ docker-machine active  # docker-serve
 ```
  
-Let's make a remote backup directory then dump our tar archive into it. 
+Let's make a remote backup directory then scp our tar archive into it. 
 ``` 
  local$ docker-machine ssh docker-serve pwd  # /home/dockeradmin
  local$ docker-machine ssh docker-serve mkdir backups
