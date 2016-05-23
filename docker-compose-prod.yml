@@ -7,6 +7,7 @@ services:
     image: postgres:9.5.2
     volumes:
       - dbdata:/var/lib/postgresql/data
+    restart: always
   web:
     container_name: learn_web
     image: jvwong/learn_repo:latest
@@ -17,17 +18,19 @@ services:
       - db
     env_file:
       - ./environment/prod.env
+    restart: always
   proxy:
     container_name: learn_proxy
     image: jvwong/proxy:1.0
     links:
       - web
     ports:
-      - "80:80"
+      - "41960:80"
     env_file:
       - ./environment/prod.env
     volumes_from:
       - web
+    restart: always
 
 volumes:
   dbdata:
@@ -36,4 +39,5 @@ volumes:
     driver: local
   webmedia:
     driver: local
+
 
