@@ -19,9 +19,11 @@ Assuming that the web container is running, just hook in:
 $ docker exec -it learn_web python manage.py test <optional: dot-separated module>
 ```
 
+### Bower packages
+To avoid the volumes permission issues, Dockerfile installs bower packages in /tmp then copies this to STATIC_ROOT (/home/uwsgi/static)
+
 
 ## Docker
-
 ### Install some helpful setup commands (OSX)
 To make life easier, install the command-completion scripts
 
@@ -188,6 +190,12 @@ Stop the containers then dump the data directly into the fresh database containe
 $ docker-compose stop  
 $ docker run --rm --volumes-from learn_db -v /Users/jeffreywong/backups/2016/05/22:/backup busybox tar xvfz /backup/postgres-2016-05-22-0954.tar.gz
 ```
+Let's try that for media files too:
+```
+$ docker-compose stop  
+$ docker run --rm --volumes-from learn_web -v /Users/jeffreywong/backups/media/2016/05/24:/backup busybox tar xvfz /backup/media-2016-05-24-1257.tar.gz
+```
+
 
 #### Remote Host
 Of course, use docker-machine to hook into the remote machine (docker-serve).
@@ -208,3 +216,5 @@ Get the volume associated with the database container (learn_db):
 ```
 $ docker run --rm --volumes-from learn_db -v /home/dockeradmin/backups:/backup busybox tar xvfz /backup/<tar.gz file>
 ```
+
+Do same for media.

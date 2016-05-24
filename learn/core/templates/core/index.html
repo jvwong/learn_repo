@@ -4,13 +4,15 @@
 
 {% block title %} {{ block.super }} - Index {% endblock title %}
 {% block stylesheets %}
-{% compress css %}
-    <link rel="stylesheet" media="all" type="text/less" href="{% static 'core/less/style.less' %}" />
-{% endcompress %}
+    {{ block.super }}
+    {% compress css %}
+        <link rel="stylesheet" media="all" type="text/less" href="{% static 'core/less/style.less' %}" />
+    {% endcompress %}
 {% endblock stylesheets %}
 
+{% block header %}<h1>Index</h1>{% endblock header %}
 {% block content %}
-    <h1>Index</h1>
+    <h2>Site Content</h2>
     <ul>
         <li>
             <a href="{% url 'case-list' %}">Case Studies</a>

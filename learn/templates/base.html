@@ -1,14 +1,25 @@
+{% load static from staticfiles %}
+{% load compress %}
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %} Learn {% endblock title %}</title>
-        {% block stylesheets %}{% endblock stylesheets %}
-        {% block javascript %}{% endblock javascript %}
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>{% block title %}Learn{% endblock title %}</title>
+        {% block stylesheets %}
+            <link rel="stylesheet" type="text/css" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}"/>
+            <link rel="stylesheet" type="text/css" href="{% static 'vendor/Flat-UI-master/dist/css/flat-ui.min.css' %}"/>
+        {% endblock stylesheets %}
+
+        {% block head %}{% endblock head %}
     </head>
     <body>
-        <div class="container" id="content">
-            {% block content %}{% endblock content %}
-        </div>
+        {% block header %}{% endblock header %}
+        {% block content %}{% endblock content %}
+        {% block footer %}{% endblock footer %}
+        {% block javascript %}{% endblock javascript %}
     </body>
 </html>

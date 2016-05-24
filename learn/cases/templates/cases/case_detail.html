@@ -5,6 +5,7 @@
 
 {% block stylesheets %}
 {% compress css %}
+    {{ block.super }}
     <link rel="stylesheet" media="all" type="text/less" href="{% static 'cases/less/style.less' %}" />
 {% endcompress %}
 {% endblock stylesheets %}

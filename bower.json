@@ -1,0 +1,26 @@
+{
+  "name": "learn_repo",
+  "version": "0.1.0",
+  "homepage": "",
+  "authors": [
+    "Jeffrey Wong <jvwong@outlook.com>"
+  ],
+  "description": "Learning Portal for Pathway Commons",
+  "keywords": [
+    "biology",
+    "networks",
+    "pathways"
+  ],
+  "license": "",
+  "private": false,
+  "ignore": [
+    "**/.*",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~1.11.3",
+    "bootstrap": "~3.3.6"
+  }
+}
