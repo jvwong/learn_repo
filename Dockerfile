@@ -20,7 +20,7 @@ EXPOSE 8000
 
 # Runing Django as uwsgi - requires writeable directories
 USER uwsgi
-RUN mkdir -p ~/compress ~/static ~/media
+RUN mkdir -p ~/static ~/media
 RUN mkdir -p ~/log/gunicorn
 RUN touch ~/log/gunicorn/gunicorn_access.log
 RUN touch ~/log/gunicorn/gunicorn_error.log

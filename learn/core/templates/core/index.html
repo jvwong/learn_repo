@@ -1,15 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-    <body>
-        <h1>Learn</h1>
-        <ul>
-            <li>
-                <a href="{% url 'case-list' %}">Case Studies</a>
-            </li>
-        </ul>
-    </body>
-</html>
+{% extends "base_CORE.html" %}
+{% load static from staticfiles %}
+{% load compress %}
+
+{% block title %} {{ block.super }} - Index {% endblock title %}
+{% block stylesheets %}
+{% compress css %}
+    <link rel="stylesheet" media="all" type="text/less" href="{% static 'core/less/style.less' %}" />
+{% endcompress %}
+{% endblock stylesheets %}
+
+{% block content %}
+    <h1>Index</h1>
+    <ul>
+        <li>
+            <a href="{% url 'case-list' %}">Case Studies</a>
+        </li>
+    </ul>
+{% endblock content %}

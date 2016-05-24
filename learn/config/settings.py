@@ -123,9 +123,6 @@ COMPRESS_PRECOMPILERS = (
 )
 INTERNAL_IPS = ('127.0.0.1',)
 
-# Should be writeable by Docker USER
-COMPRESS_ROOT = os.path.abspath(os.path.join(HOME_DIR, "compress"))
-
 # Static files (CSS, JavaScript, Images)
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
