@@ -88,3 +88,18 @@ class Case(TimeStampedModel):
 
     def get_absolute_url(self):
         return reverse('case-detail', args=[str(self.slug)])
+
+# # Receive the pre_delete signal and delete the file associated with the model instance.
+# from django.db.models.signals import pre_delete
+# from django.dispatch.dispatcher import receiver
+#
+# @receiver(pre_delete, sender=Case)
+# def mymodel_delete(sender, instance, **kwargs):
+#     # Pass false so FileField doesn't save the model.
+#     if hasattr(instance, 'figure'):
+#         if hasattr(instance.figure, 'name'):
+#             print(instance.figure.name)
+#             # instance.figure.delete(False)
+#
+#     # if hasattr(instance, 'pdf'):
+#         # instance.pdf.delete(False)

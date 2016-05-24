@@ -12,10 +12,11 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 DEBUG = bool(os.environ.get('DEBUG', False))
 
 #Pre-configured paths
+HOME_DIR = os.environ.get('HOME')
+
 CONFIG_DIR = os.path.abspath(os.path.dirname(__file__))
 PROJECT_DIR = os.path.abspath(os.path.join(CONFIG_DIR, ".."))
 REPO_DIR = os.path.abspath(os.path.join(PROJECT_DIR, ".."))
-STATIC_PATH = os.path.abspath(os.path.join(REPO_DIR, "static"))
 TEMPLATE_PATH = os.path.abspath(os.path.join(PROJECT_DIR, "templates"))
 
 ADMINS = (
@@ -61,7 +62,7 @@ DATABASES = {
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = os.path.abspath(os.path.join(PROJECT_DIR, "media"))
+MEDIA_ROOT = os.path.abspath(os.path.join(HOME_DIR, "media"))
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -72,7 +73,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = os.path.abspath(os.path.join(PROJECT_DIR, "static"))
+STATIC_ROOT = os.path.abspath(os.path.join(HOME_DIR, "static"))
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
@@ -109,10 +110,28 @@ TEMPLATES = [
     },
 ]
 
+# django-compressor
+COMPRESS_ENABLED = True
+COMPRESS_CSS_FILTERS = [
+    'compressor.filters.cssmin.CSSMinFilter'
+]
+COMPRESS_JS_FILTERS = [
+    'compressor.filters.jsmin.JSMinFilter'
+]
+COMPRESS_PRECOMPILERS = (
+    ('text/less', 'lessc {infile} {outfile}'),
+)
+INTERNAL_IPS = ('127.0.0.1',)
+
+# Should be writeable by Docker USER
+COMPRESS_ROOT = os.path.abspath(os.path.join(HOME_DIR, "compress"))
+
 # Static files (CSS, JavaScript, Images)
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # other finders..
+    'compressor.finders.CompressorFinder'
 ]
 
 # Additional locations of static files
@@ -133,8 +152,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'cases',
     'core',
+    # other apps
+    "compressor",
     'markupfield',
-    'tagging'
+    'tagging',
+    'django_cleanup'
 ]
 
 MIDDLEWARE_CLASSES = [

@@ -12,8 +12,8 @@ services:
     container_name: learn_web
     image: jvwong/learn_repo:latest
     volumes:
-      - webstatic:/learn/static
-      - webmedia:/learn/media
+      - webstatic:/home/uwsgi/static
+      - webmedia:/home/uwsgi/media
     depends_on:
       - db
     env_file:

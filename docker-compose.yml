@@ -12,23 +12,14 @@ services:
     build: .
     volumes:
       - ./learn:/learn
-      - webstatic:/learn/static
-      - webmedia:/learn/media
+      - webstatic:/home/uwsgi/static
+      - webmedia:/home/uwsgi/media
     depends_on:
       - db
     env_file:
       - ./environment/dev.env
-  proxy:
-    container_name: learn_proxy
-    image: jvwong/proxy:1.0
-    links:
-      - web
     ports:
-      - "41960:80"
-    env_file:
-      - ./environment/dev.env
-    volumes_from:
-      - web
+      - "41960:8000"
 
 volumes:
   dbdata:

@@ -175,9 +175,10 @@ Backup via the `backup.sh` utility. This will dump the entire data volume into a
 
 ### Restore
 #### Local 
-Dump the data into the database container (learnrepo_db):
+Stop all the containers. Dump the data into the database container (learnrepo_db):
 ```
- $ docker run --rm --volumes-from learn_db -v /Users/jeffreywong/backups/2016/05/19:/backup busybox tar xvfz /backup/postgres-2016-05-19-2029.tar.gz
+ $ docker-compose stop
+ $ docker run --rm --volumes-from learn_db -v /Users/jeffreywong/backups/2016/05/22:/backup busybox tar xvfz /backup/postgres-2016-05-22-0954.tar.gz
 ```
 
 #### Remote Host 

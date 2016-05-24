@@ -12,10 +12,15 @@ RUN mkdir /learn
 WORKDIR /learn
 COPY learn /learn
 
-EXPOSE 8000
-USER uwsgi
+RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
+RUN apt-get install -y nodejs
+RUN npm install -g less
 
-# Temp -- see logging chapter
+EXPOSE 8000
+
+# Runing Django as uwsgi - requires writeable directories
+USER uwsgi
+RUN mkdir -p ~/compress ~/static ~/media
 RUN mkdir -p ~/log/gunicorn
 RUN touch ~/log/gunicorn/gunicorn_access.log
 RUN touch ~/log/gunicorn/gunicorn_error.log

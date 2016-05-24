@@ -8,9 +8,9 @@ set -e
 # i.e. HOST -| IMAGE but you can manipulate the CONTAINER as below
 # Must be run as root as container user is uwsgi as set in Dockerfile
 echo "Collect static"
-docker exec -it --user="root" learn_web python manage.py collectstatic --no-input
+docker exec -it --user="uwsgi" learn_web python manage.py collectstatic --no-input
 
 echo "Run migrations"
-docker exec -it --user="root" learn_web python manage.py makemigrations --no-input
-docker exec -it --user="root" learn_web python manage.py migrate --no-input
+docker exec -it --user="uwsgi" learn_web python manage.py makemigrations cases --no-input
+docker exec -it --user="uwsgi" learn_web python manage.py migrate --no-input
 
