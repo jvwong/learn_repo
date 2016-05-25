@@ -21,7 +21,7 @@ services:
     restart: always
   proxy:
     container_name: learn_proxy
-    image: jvwong/proxy:1.1
+    image: jvwong/proxy:1.2
     links:
       - web
     ports:
