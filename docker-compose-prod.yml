@@ -21,11 +21,11 @@ services:
     restart: always
   proxy:
     container_name: learn_proxy
-    image: jvwong/proxy:1.0
+    image: jvwong/proxy:1.1
     links:
       - web
     ports:
-      - "41960:80"
+      - "80:80"
     env_file:
       - ./environment/prod.env
     volumes_from:
