@@ -71,13 +71,17 @@ class Case(TimeStampedModel):
                         markup_type='markdown',
                         help_text='Markdown enabled')
 
-    figure = ImageField(upload_to=case_directory_path, blank=True)
+    figure = ImageField(upload_to=case_directory_path,
+        blank=True,
+        help_text="JPEG only")
     figure_legend = MarkupField(blank=True,
                                 markup_type='markdown',
                                 help_text='Markdown enabled')
     pdf = models.FileField(upload_to=case_directory_path, blank=True)
 
-    cover = ImageField(upload_to=case_directory_path, blank=True)
+    cover = ImageField(upload_to=case_directory_path,
+        blank=True,
+        help_text="JPEG only")
 
     slug = models.SlugField(unique=True, max_length=250)
     tags = TagField(help_text="Separate tags with commas.")

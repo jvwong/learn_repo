@@ -27,7 +27,7 @@
 
 
   <div>
-    {% thumbnail case.figure "1000" format="PNG" as im %}
+    {% thumbnail case.figure "x300" as im %}
       <img class="img-responsive" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
     {% endthumbnail %}
   </div>

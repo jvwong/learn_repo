@@ -10,7 +10,7 @@
 
         <title>{% block title %}Learn{% endblock title %}</title>
         <link rel="stylesheet" type="text/css" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}"/>
-        <link rel="stylesheet" type="text/css" href="{% static 'vendor/Flat-UI-master/dist/css/flat-ui.min.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'vendor/Flat-UI-master/dist/css/flat-ui.min.css' %}"/>        
         {% block stylesheets %}{% endblock stylesheets %}
 
         {% block head %}{% endblock head %}
@@ -25,6 +25,7 @@
         {% block footer %}{% endblock footer %}
         </div>
 
+        <script type="text/javascript" href="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"/>
         {% block javascript %}{% endblock javascript %}
     </body>
 </html>

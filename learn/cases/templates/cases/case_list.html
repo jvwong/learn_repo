@@ -1,13 +1,27 @@
-{% extends "base.html" %}
+{% extends "cases/base_CASES.html" %}
 {% load staticfiles %}
+{% load thumbnail %}
 
 {% block content %}
-    <h1>Cases</h1>
-    <ul>
-        {% for case in object_list %}
-            <li>
-                <a href="{{ case.get_absolute_url }}">{{ case.title }}</a>
-            </li>
-        {% endfor %}
-    </ul>
+<div class="case-list">
+  {% for case in object_list %}
+    <div class="row">
+      <div class="list-item col-xs-12">
+        <a href="{{ case.get_absolute_url }}">
+          <div id="cover">
+            {% thumbnail case.cover "750x300" crop="center" as im %}
+              <img class="img-responsive" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
+            {% empty %}
+              <img class="img-responsive" src="http://placehold.it/700x300" />
+            {% endthumbnail %}
+          </div>
+          <div id="cover-overlay">
+            <h4>{{ case.title }}</h4>
+            <p>{{ case.subtitle }}</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  {% endfor %}
+</div>
 {% endblock %}

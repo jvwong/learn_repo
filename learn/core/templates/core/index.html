@@ -1,4 +1,4 @@
-{% extends "base_CORE.html" %}
+{% extends "core/base_CORE.html" %}
 
 {% block title %} {{ block.super }} - Index {% endblock title %}
 
@@ -8,7 +8,7 @@
 
 {% block content %}
     <h3>Site Content</h3>
-    <div>Path: {{ request.path }}</div>    
+    <div>Path: {{ request.path }}</div>
     <ul>
         <li>
             <a href="{% url 'case-list' %}">Case Studies</a>
