@@ -10,7 +10,7 @@ services:
     restart: always
   web:
     container_name: learn_web
-    image: jvwong/learn_repo:latest
+    image: jvwong/learnweb:0.2
     volumes:
       - webstatic:/home/uwsgi/static
       - webmedia:/home/uwsgi/media
