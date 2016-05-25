@@ -209,12 +209,18 @@ Let's make a remote backup directory then scp our tar archive into it.
 ```
 $ docker-machine ssh docker-serve pwd  # /home/dockeradmin
 $ docker-machine ssh docker-serve mkdir backups
-$ docker-machine scp ~/backups/<path/to/tar.gz> docker-serve:~/backups
+$ docker-machine scp ~/backups/db/2016/05/24/postgres-2016-05-24-1257.tar.gz docker-serve:~/backups
+$ docker-machine scp ~/backups/media/2016/05/24/media-2016-05-24-1257.tar.gz docker-serve:~/backups
 ```
 
-Get the volume associated with the database container (learn_db):
+Make sure you have containers then dump the tar into the database/web container (learn_db):
 ```
-$ docker run --rm --volumes-from learn_db -v /home/dockeradmin/backups:/backup busybox tar xvfz /backup/<tar.gz file>
+$ docker run --rm --volumes-from learn_db -v /home/dockeradmin/backups:/backup busybox tar xvfz /backup/postgres-2016-05-24-1257.tar.gz
+$ docker run --rm --volumes-from learn_web -v /home/dockeradmin/backups:/backup busybox tar xvfz /backup/media-2016-05-24-1257.tar.gz
 ```
 
-Do same for media.
+Do some housekeeping with `django_initialize.sh`. You may need to boot the volumes fresh and launch the app
+```
+$ 
+$ docker-compose --file=docker-compose-prod.yml up
+```
