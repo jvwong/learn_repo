@@ -7,8 +7,8 @@ docker rm -v $(docker ps -aq)
 #### Get rid of dangling volumes
 #### use docker 'rm -v' when deleting containers OR
 #### add the --rm flag with 'docker run'
-docker volume rm $(docker volume ls -fq dangling=true)
-docker volume rm $(docker volume ls -aq)
+#docker volume rm $(docker volume ls -fq dangling=true)
+#docker volume rm $(docker volume ls -aq)
 
 ## remove stopped containers
 #docker rm -v $(docker ps -aq -f="exited=0")

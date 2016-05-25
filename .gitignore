@@ -1,4 +1,5 @@
-.idea/
+.idea
 *.pyc
-migrations/
+migrations
 learn/static/admin
+environment/

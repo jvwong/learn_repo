@@ -25,7 +25,7 @@ services:
     links:
       - web
     ports:
-      - "80:80"
+      - "41960:80"
     env_file:
       - ./environment/prod.env
     volumes_from:
