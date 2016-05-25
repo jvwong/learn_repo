@@ -174,9 +174,6 @@ MARKUP_FIELD_TYPES = (
     ('markdown', markdown.markdown),
 )
 
-
-### sorl-thumbnail
-THUMBNAIL_DEBUG = True
 ## Cache
 CACHES = {
     'default': {

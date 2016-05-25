@@ -27,8 +27,8 @@
 
 
   <div>
-    {% thumbnail case.figure "100x100" crop="center" as im %}
-      {{ im.name }}
+    {% thumbnail case.figure "1000" format="PNG" as im %}
+      <img class="img-responsive" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
     {% endthumbnail %}
   </div>
   <div>{{ case.figure_legend }}</div>

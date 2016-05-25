@@ -77,6 +77,8 @@ class Case(TimeStampedModel):
                                 help_text='Markdown enabled')
     pdf = models.FileField(upload_to=case_directory_path, blank=True)
 
+    cover = ImageField(upload_to=case_directory_path, blank=True)
+
     slug = models.SlugField(unique=True, max_length=250)
     tags = TagField(help_text="Separate tags with commas.")
 
