@@ -7,6 +7,8 @@ services:
     image: postgres:9.5.2
     volumes:
       - dbdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
   web:
     container_name: learn_web
     build: .

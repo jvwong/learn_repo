@@ -2,4 +2,4 @@
 *.pyc
 migrations
 learn/static/admin
-environment/
+environment/*.env

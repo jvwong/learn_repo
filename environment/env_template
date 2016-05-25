@@ -1,0 +1,32 @@
+# These are the required environment variables 'injected' at runtime
+### System
+ENV=DEV/PROD
+
+### Postgres
+POSTGRES_USER=postgres
+POSTGRES_DB=
+POSTGRES_PASSWORD=
+
+### Django
+SECRET_KEY=
+DJANGO_SETTINGS_MODULE=config.settings
+DEBUG=
+ALLOWED_HOSTS=
+DATABASE_ENGINE=django.db.backends.postgresql_psycopg2
+DATABASE_NAME=
+DATABASE_USER=
+# This should match POSTGRES_PASSWORD
+DATABASE_PASSWORD=
+DATABASE_HOST=
+DATABASE_PORT=
+
+### NGINX
+# The domain or ip
+NGINX_HOST=
+# The name of the web app service and port exposed
+NGINX_PROXY=http://service:post
+# Container location of static and media items to serve
+STATIC_VOLUME=
+MEDIA_VOLUME=
+
+

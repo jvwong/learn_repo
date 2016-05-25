@@ -188,12 +188,12 @@ Backup the database and media content with `Docker/utilities/backup.sh`. This wi
 Stop the containers then dump the data directly into the fresh database container (learnrepo_db):
 ```
 $ docker-compose stop  
-$ docker run --rm --volumes-from learn_db -v /Users/jeffreywong/backups/2016/05/22:/backup busybox tar xvfz /backup/postgres-2016-05-22-0954.tar.gz
+$ docker run --rm --volumes-from learn_db -v /Users/jeffreywong/backups/db/2016/05/24/:/backup busybox tar xvfz /backup/postgres-2016-05-24-1257.tar.gz
 ```
 Let's try that for media files too:
 ```
 $ docker-compose stop  
-$ docker run --rm --volumes-from learn_web -v /Users/jeffreywong/backups/media/2016/05/24:/backup busybox tar xvfz /backup/media-2016-05-24-1257.tar.gz
+$ docker run --rm --volumes-from learn_web -v /Users/jeffreywong/backups/media/2016/05/24/:/backup busybox tar xvfz /backup/media-2016-05-24-1257.tar.gz
 ```
 
 
