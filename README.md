@@ -22,6 +22,24 @@ $ docker exec -it learn_web python manage.py test <optional: dot-separated modul
 ### Bower packages
 To avoid the volumes permission issues, Dockerfile installs bower packages in /tmp then copies this to STATIC_ROOT (/home/uwsgi/static)
 
+## PostgreSQL Database
+### Housekeeping 
+The postgres container password and user are set in the environment variable (POSTGRES_USER, POSTGRES_PASSWORD).
+
+Let's login
+```
+$ psql -h localhost -d learn.db -p 5432 -U postgres
+...  
+# \dt
+```
+
+You can change a password:
+```
+# ALTER USER <username> WITH PASSWORD '<new password>';
+```
+The Django DATABASE_PASSWORD environement variable will need to match.
+
+
 
 ## Docker
 ### Install some helpful setup commands (OSX)
