@@ -14,8 +14,20 @@ $ docker exec -it learn_web python manage.py test <optional: dot-separated modul
 To avoid the volumes permission issues, Dockerfile installs bower packages in /tmp then copies this to STATIC_ROOT (/home/uwsgi/static)
 
 ### Package [sorl-thumbnail](http://sorl-thumbnail.readthedocs.io/en/latest/index.html)
-This package depends on key-value store Redis.
+This package depends on key-value store memcached.
 
+#### SETTINGS
+In Django settings.py file, you'll need to add the cache settings as:
+```
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
+```
+#### Models
+Use the sorl.thumbnail.ImageField in models as this notifies the key-value store, and delete all of its thumbnail references and files.
 
 ## PostgreSQL Database
 ### Housekeeping

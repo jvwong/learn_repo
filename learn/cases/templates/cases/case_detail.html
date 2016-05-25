@@ -1,42 +1,47 @@
 {% extends "cases/base_CASES.html" %}
 {% load tagging_tags %}
+{% load thumbnail %}
 
 {% block content %}
-    <h1>{{ case.title }}</h1>
+  <h3>{{ case.title }}</h3>
 
-    <div>
-        <h3><a href="{{ case.article.url }}">{{ case.article.title }}</a></h3>
-        <span>{{ case.article.authors.0 }}</span>
-    </div>
-    <hr/>
+  <div>
+    <h3><a href="{{ case.article.url }}">{{ case.article.title }}</a></h3>
+    <span>{{ case.article.authors.0 }}</span>
+  </div>
+  <hr/>
 
-    <div>{{ case.quick_summary }}</div>
+  <div>{{ case.quick_summary }}</div>
 
-    <div>{{ case.subtitle }}</div><hr/>
-    <div>{{ case.summary }}</div><hr/>
-    <div>{{ case.author_profile }}</div><hr/>
-    <div>{{ case.context }}</div><hr/>
-    <div>{{ case.question }}</div><hr/>
-    <div>{{ case.researcher_goals }}</div><hr/>
-    <div>{{ case.approach }}</div><hr/>
+  <div>{{ case.subtitle }}</div><hr/>
+  <div>{{ case.summary }}</div><hr/>
+  <div>{{ case.author_profile }}</div><hr/>
+  <div>{{ case.context }}</div><hr/>
+  <div>{{ case.question }}</div><hr/>
+  <div>{{ case.researcher_goals }}</div><hr/>
+  <div>{{ case.approach }}</div><hr/>
 
-    <div>{{ case.references }}</div><hr/>
+  <div>{{ case.references }}</div><hr/>
 
-    <div>{{ case.quote }}</div><hr/>
+  <div>{{ case.quote }}</div><hr/>
 
-    <div><img width="500" src="{{ MEDIA_URL }}{{ case.figure }}" /></div>
-    <div>{{ case.figure_legend }}</div>
-    <hr/>
 
-    <h4>Tags</h4>
-    <ul>
-        {% tags_for_object case as tag_list %}
-        {% for tag in tag_list %}
-            <li><a href="{% url 'case-tag-list' tag.name %}">{{ tag.name }}</a></li>
-        {% endfor %}
-    </ul>
-    <hr/>
-    <div><a href="{{MEDIA_URL}}{{ case.pdf }}">pdf</a></div>
-    <span class="fui-twitter"></span>
+  <div>
+    {% thumbnail case.figure "100x100" crop="center" as im %}
+      {{ im.name }}
+    {% endthumbnail %}
+  </div>
+  <div>{{ case.figure_legend }}</div>
+  <hr/>
 
-{% endblock %}
+  <div><a href="{{MEDIA_URL}}{{ case.pdf }}">pdf</a></div>
+  <span class="fui-twitter"></span>
+
+  <h4>Tags</h4>
+  <ul>
+    {% tags_for_object case as tag_list %}
+    {% for tag in tag_list %}
+      <li><a href="{% url 'case-tag-list' tag.name %}">{{ tag.name }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock content %}

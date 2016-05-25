@@ -176,13 +176,13 @@ MARKUP_FIELD_TYPES = (
 
 
 ### sorl-thumbnail
-THUMBNAIL_KVSTORE = 'sorl.thumbnail.kvstores.redis_kvstore.KVStore'
+THUMBNAIL_DEBUG = True
 ## Cache
 CACHES = {
     'default': {
-        'BACKEND': 'redis_cache.RedisCache',
-        'LOCATION': 'redis:6379',
-    },
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
 }
 
 # A sample logging configuration. The only tangible logging

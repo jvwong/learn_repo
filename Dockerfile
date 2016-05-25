@@ -6,6 +6,8 @@ RUN groupadd -r uwsgi && useradd -r -m -g uwsgi uwsgi
 # Install dependencies
 ADD requirements.txt /tmp/requirements.txt
 RUN cd /tmp && pip install -r requirements.txt
+RUN apt-get update
+RUN apt-get install -y memcached
 
 # Node and bower
 RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
@@ -33,5 +35,3 @@ RUN touch ~/log/gunicorn/gunicorn_error.log
 
 COPY cmd.sh /
 CMD ["/cmd.sh"]
-
-
