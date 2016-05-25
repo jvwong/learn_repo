@@ -4,6 +4,7 @@ from django.contrib.postgres.fields import ArrayField, IntegerRangeField, JSONFi
 from django.core.urlresolvers import reverse
 from markupfield.fields import MarkupField
 from tagging.fields import TagField
+from sorl.thumbnail import ImageField
 
 
 class Article(TimeStampedModel):
@@ -70,7 +71,7 @@ class Case(TimeStampedModel):
                         markup_type='markdown',
                         help_text='Markdown enabled')
 
-    figure = models.ImageField(upload_to=case_directory_path, blank=True)
+    figure = ImageField(upload_to=case_directory_path, blank=True)
     figure_legend = MarkupField(blank=True,
                                 markup_type='markdown',
                                 help_text='Markdown enabled')
@@ -88,18 +89,3 @@ class Case(TimeStampedModel):
 
     def get_absolute_url(self):
         return reverse('case-detail', args=[str(self.slug)])
-
-# # Receive the pre_delete signal and delete the file associated with the model instance.
-# from django.db.models.signals import pre_delete
-# from django.dispatch.dispatcher import receiver
-#
-# @receiver(pre_delete, sender=Case)
-# def mymodel_delete(sender, instance, **kwargs):
-#     # Pass false so FileField doesn't save the model.
-#     if hasattr(instance, 'figure'):
-#         if hasattr(instance.figure, 'name'):
-#             print(instance.figure.name)
-#             # instance.figure.delete(False)
-#
-#     # if hasattr(instance, 'pdf'):
-#         # instance.pdf.delete(False)

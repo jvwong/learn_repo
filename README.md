@@ -1,17 +1,8 @@
 # Learn Project
 
 ## Django
-### Create Super User
-Now create a super user inside the running container:
-```
-$ docker exec -it learnrepo_web_1 /bin/bash    
-root@:/learn# python manage.py createsuperuser
-...
-root@:/learn# exit
-```
-
-### Database migrations
-This is contained in the `django_initialize.sh` utility.
+### Initialization
+The script `django_initialize.sh` collects static assets and any migrations.
 
 ### Testing
 Assuming that the web container is running, just hook in:
@@ -22,8 +13,12 @@ $ docker exec -it learn_web python manage.py test <optional: dot-separated modul
 ### Bower packages
 To avoid the volumes permission issues, Dockerfile installs bower packages in /tmp then copies this to STATIC_ROOT (/home/uwsgi/static)
 
+### Package [sorl-thumbnail](http://sorl-thumbnail.readthedocs.io/en/latest/index.html)
+This package depends on key-value store Redis.
+
+
 ## PostgreSQL Database
-### Housekeeping 
+### Housekeeping
 The postgres container password and user are set in the environment variable (POSTGRES_USER, POSTGRES_PASSWORD).
 
 Let's login
@@ -193,16 +188,16 @@ $ sudo apt-get install docker-engine
 ```
 
 
-## Named Volume Backup & Restoration
+### Named Volume Backup & Restoration
 The two main items to be concerned with are Postgres data and assets in MEDIA_ROOT (e.g. pdf, images). Let's grab these every once and a while.
 
 > Note: the official postgres Dockerfile defines a volume at /var/lib/postgresql/data.
 
-### Backup
+#### Backup
 Backup the database and media content with `Docker/utilities/backup.sh`. This will dump the entire data volume into a tar file on the local machine inside s`~/backups/<yr>/<mth>/<d>/postgres-<yr>-<mth>-<d>-<hrmin>.tar.gz`. See [Restore](###Restore) on how to dump to target database.
 
-### Restore
-#### Local
+#### Restore
+##### Local
 Stop the containers then dump the data directly into the fresh database container (learnrepo_db):
 ```
 $ docker-compose stop  
@@ -215,7 +210,7 @@ $ docker run --rm --volumes-from learn_web -v /Users/jeffreywong/backups/media/2
 ```
 
 
-#### Remote Host
+##### Remote Host
 Of course, use docker-machine to hook into the remote machine (docker-serve).
 ```
 $ docker-machine ls
@@ -239,6 +234,5 @@ $ docker run --rm --volumes-from learn_web -v /home/dockeradmin/backups:/backup 
 
 Do some housekeeping with `django_initialize.sh`. You may need to boot the volumes fresh and launch the app
 ```
-$ 
 $ docker-compose --file=docker-compose-prod.yml up
 ```

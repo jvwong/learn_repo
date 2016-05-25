@@ -1,14 +1,5 @@
-{% extends "base.html" %}
-{% load static from staticfiles %}
+{% extends "cases/base_CASES.html" %}
 {% load tagging_tags %}
-{% load compress %}
-
-{% block stylesheets %}
-{% compress css %}
-    {{ block.super }}
-    <link rel="stylesheet" media="all" type="text/less" href="{% static 'cases/less/style.less' %}" />
-{% endcompress %}
-{% endblock stylesheets %}
 
 {% block content %}
     <h1>{{ case.title }}</h1>

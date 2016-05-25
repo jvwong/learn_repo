@@ -154,7 +154,8 @@ INSTALLED_APPS = [
     "compressor",
     'markupfield',
     'tagging',
-    'django_cleanup'
+    'django_cleanup',
+    'sorl.thumbnail'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -173,6 +174,16 @@ MARKUP_FIELD_TYPES = (
     ('markdown', markdown.markdown),
 )
 
+
+### sorl-thumbnail
+THUMBNAIL_KVSTORE = 'sorl.thumbnail.kvstores.redis_kvstore.KVStore'
+## Cache
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': 'redis:6379',
+    },
+}
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -202,7 +213,3 @@ LOGGING = {
         },
     }
 }
-
-
-
-

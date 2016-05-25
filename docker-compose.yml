@@ -1,5 +1,12 @@
 version: '2'
 services:
+  redis:
+    container_name: learn_redis
+    image: redis:3
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
   db:
     container_name: learn_db
     env_file:
@@ -16,8 +23,9 @@ services:
       - ./learn:/learn
       - webstatic:/home/uwsgi/static
       - webmedia:/home/uwsgi/media
-    depends_on:
+    links:
       - db
+      - redis
     env_file:
       - ./environment/dev.env
     ports:
@@ -29,4 +37,6 @@ volumes:
   webstatic:
     driver: local
   webmedia:
+    driver: local
+  redisdata:
     driver: local
