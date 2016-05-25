@@ -9,17 +9,22 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>{% block title %}Learn{% endblock title %}</title>
-        {% block stylesheets %}
-            <link rel="stylesheet" type="text/css" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}"/>
-            <link rel="stylesheet" type="text/css" href="{% static 'vendor/Flat-UI-master/dist/css/flat-ui.min.css' %}"/>
-        {% endblock stylesheets %}
+        <link rel="stylesheet" type="text/css" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'vendor/Flat-UI-master/dist/css/flat-ui.min.css' %}"/>
+        {% block stylesheets %}{% endblock stylesheets %}
 
         {% block head %}{% endblock head %}
     </head>
     <body>
+
+        <div class="container">
         {% block header %}{% endblock header %}
+
         {% block content %}{% endblock content %}
+
         {% block footer %}{% endblock footer %}
+        </div>
+
         {% block javascript %}{% endblock javascript %}
     </body>
 </html>

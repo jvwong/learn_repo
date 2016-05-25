@@ -1,14 +1,9 @@
 {% extends "base_CORE.html" %}
-{% load static from staticfiles %}
-{% load compress %}
+
+
 
 {% block title %} {{ block.super }} - Index {% endblock title %}
-{% block stylesheets %}
-    {{ block.super }}
-    {% compress css %}
-        <link rel="stylesheet" media="all" type="text/less" href="{% static 'core/less/style.less' %}" />
-    {% endcompress %}
-{% endblock stylesheets %}
+
 
 {% block header %}<h1>Index</h1>{% endblock header %}
 {% block content %}

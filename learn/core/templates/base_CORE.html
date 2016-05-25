@@ -1,1 +1,9 @@
 {% extends "base.html" %}
+{% load compress %}
+{% load static from staticfiles %}
+
+{% block stylesheets %}
+    {% compress css %}
+        <link rel="stylesheet" media="all" type="text/less" href="{% static 'core/less/style.less' %}" />
+    {% endcompress %}
+{% endblock stylesheets %}
