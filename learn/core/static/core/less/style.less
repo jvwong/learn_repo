@@ -41,11 +41,25 @@ li, p {
 
 /* Phones (tablets, 767px and down) */
 @media (max-width: 500px) {
+  .container {
+    padding: 0;
+  }
   /* list group */
   .list-group {
     .list-group-item {
-      .list-group-item-text > p{
-        font-size: 0.8em;
+      padding: 0px;
+      .list-group-item-text {
+        padding: 5px;
+        width: 100%;
+        height: 100%;
+        p{
+          font-size: 0.9em;
+        }
+        h4{
+          font-size: 1.1em;
+        }
+      }
+      .list-group-item-media {
       }
     }
   }
