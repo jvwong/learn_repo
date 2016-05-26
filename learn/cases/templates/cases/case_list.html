@@ -4,24 +4,21 @@
 
 {% block content %}
 <div class="case-list">
+  <div class="list-group">
   {% for case in object_list %}
-    <div class="row">
-      <div class="list-item col-xs-12">
-        <a href="{{ case.get_absolute_url }}">
-          <div id="cover">
-            {% thumbnail case.cover "750x300" crop="center" as im %}
-              <img class="img-responsive" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
-            {% empty %}
-              <img class="img-responsive" src="http://placehold.it/700x300" />
-            {% endthumbnail %}
-          </div>
-          <div id="cover-overlay">
-            <h4>{{ case.title }}</h4>
-            <p>{{ case.subtitle }}</p>
-          </div>
-        </a>
-      </div>
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">{{ case.title }}</h4>
+
+      <a href="{{ case.get_absolute_url }}">
+        <p class="list-group-item-text">{{ case.subtitle }}</p>
+        {% thumbnail case.cover "750x300" crop="center" as im %}
+          <img class="img-responsive" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
+        {% empty %}
+          <img class="img-responsive" src="http://placehold.it/750x300" />
+        {% endthumbnail %}
+      </a>
     </div>
   {% endfor %}
+  </div>
 </div>
 {% endblock %}
