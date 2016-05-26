@@ -7,15 +7,18 @@
   <div class="list-group">
   {% for case in object_list %}
     <div class="list-group-item">
-      <h4 class="list-group-item-heading">{{ case.title }}</h4>
-
       <a href="{{ case.get_absolute_url }}">
-        <p class="list-group-item-text">{{ case.subtitle }}</p>
-        {% thumbnail case.cover "750x300" crop="center" as im %}
-          <img class="img-responsive" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
-        {% empty %}
-          <img class="img-responsive" src="http://placehold.it/750x300" />
-        {% endthumbnail %}
+        <div class="list-group-item-text">
+          <h4>{{ case.title }}</h4>
+          <p>{{ case.subtitle }}</p>
+        </div>
+        <div class="list-group-item-media">
+          {% thumbnail case.cover "750x300" crop="center" as im %}
+            <img class="img-responsive" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
+          {% empty %}
+            <img class="img-responsive" src="http://placehold.it/750x300" />
+          {% endthumbnail %}
+        </div>
       </a>
     </div>
   {% endfor %}

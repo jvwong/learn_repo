@@ -1,10 +1,53 @@
+@import "/learn/static/vendor/less-elements/elements.less";
+
 /* Extra small devices (phones, less than 768px) */
 /* No media query since this is the default in Bootstrap */
 
+li, p {
+  text-align: justify;
+}
+
+/* List groups items */
+.list-group {
+  .list-group-item {
+    position: relative;
+
+    .list-group-item-text {
+      position: absolute;
+      color: @CLOUDS;
+      z-index: 1;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 90%;
+      height: 80%;
+      margin: auto;
+      overflow: hidden;
+      h4 {
+        color: @TURQUOISE;
+      }
+    }
+
+    .list-group-item-media {
+      background: rgba(0, 0, 0, 0.8);
+      img {
+        .opacity(0.3);
+      }
+    }
+  }
+}
+
 /* Phones (tablets, 767px and down) */
-@media (max-width: 400px) {
-  p {
-    font-size: 0.8em;
+@media (max-width: 500px) {
+  /* list group */
+  .list-group {
+    .list-group-item {
+      .list-group-item-text > p{
+        font-size: 0.8em;
+      }
+    }
   }
 }
 

@@ -6,7 +6,7 @@
   <h3>{{ case.title }}</h3>
 
   <div>
-    <h3><a href="{{ case.article.url }}">{{ case.article.title }}</a></h3>
+    <h4><a href="{{ case.article.url }}">{{ case.article.title }}</a></h4>
     <span>{{ case.article.authors.0 }}</span>
   </div>
   <hr/>
@@ -27,7 +27,7 @@
 
 
   <div>
-    {% thumbnail case.figure "x300" as im %}
+    {% thumbnail case.figure "x200" as im %}
       <img class="img-responsive" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
     {% endthumbnail %}
   </div>
