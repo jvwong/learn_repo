@@ -34,9 +34,7 @@
   <div>{{ case.figure_legend }}</div>
   <hr/>
 
-  <div><a href="{{MEDIA_URL}}{{ case.pdf }}">pdf</a></div>
-  <span class="fui-twitter"></span>
-
+  <div><a href="{{MEDIA_URL}}{{ case.pdf }}">pdf</a></div>  
   <h4>Tags</h4>
   <ul>
     {% tags_for_object case as tag_list %}
